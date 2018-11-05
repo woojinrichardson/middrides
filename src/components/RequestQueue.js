@@ -25,11 +25,13 @@ class RequestQueue extends Component {
 
   deleteRequest = (event, id) => {
     const db = firebase.firestore();
-    db.collection('requests').doc(id).delete()
-      .then(() => {
-        console.log('Document successfully deleted.');
-        // update requests in state
-      })
+    db.collection('requests').doc(id).update({
+      active: false
+    })
+    .then(() => {
+      const requests = this.state.requests.filter(request => request.id !== id);
+      this.setState({ requests })
+    });
     event.preventDefault();
   }
 
