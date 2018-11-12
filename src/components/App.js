@@ -58,23 +58,24 @@ class App extends Component {
         </div>
       );
     } else if (this.state.user) {
-      // contents = (
-      //   <div>
-      //     <RequestForm
-      //       user={this.state.user.uid}
-      //       complete={request => this.setState({ request })}
-      //     />
-      //     <SignOut />
-      //   </div>
-      // );
-      contents = (
-        <div>
-          <RequestQueue
-            user={this.state.user}
-          />
-          <SignOut />
-        </div>
-      );
+        if (this.state.isDispatcher) {
+          contents = (
+            <div>
+              <RequestQueue />
+              <SignOut />
+            </div>
+          );
+        } else {
+          contents = (
+            <div>
+              <RequestForm
+                user={this.state.user.uid}
+                complete={request => this.setState({ request })}
+              />
+              <SignOut />
+            </div>
+          );
+        }
     }
 
     const isSignedIn = this.state.user;
