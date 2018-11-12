@@ -13,18 +13,27 @@ import RequestQueue from './RequestQueue';
 class App extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       user: null,
       request: null,
+      isDispatcher: false,
     };
   }
 
   componentDidMount() {
     firebase.auth.onAuthStateChanged(user => {
-      user
-        ? this.setState({ user })
-        : this.setState({ user: null });
+      if (user) {
+        this.setState({ user });
+        const db = firebase.firebase.firestore();
+        db.collection('users').doc(user.uid).get()
+        .then(doc => {
+          const isDispatcher = doc.data().role === 'dispatcher';
+          this.setState({ isDispatcher });
+        })
+        .catch(error => console.log(error));
+      } else {
+        this.setState({ user: null });
+      }
     });
   }
 
@@ -49,7 +58,6 @@ class App extends Component {
         </div>
       );
     } else if (this.state.user) {
-      console.log(this.state.user)
       // contents = (
       //   <div>
       //     <RequestForm
@@ -61,7 +69,9 @@ class App extends Component {
       // );
       contents = (
         <div>
-          <RequestQueue />
+          <RequestQueue
+            user={this.state.user}
+          />
           <SignOut />
         </div>
       );
