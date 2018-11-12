@@ -30,7 +30,7 @@ class RequestForm extends Component {
       from: this.state.from,
       to: this.state.to,
       user: this.props.user,
-      active: true,
+      state: 'pending',
     }
     db.collection('requests').add(
       request
