@@ -12,7 +12,7 @@ class CancelRequestButton extends Component {
   onClick = (event) => {
     const db = firebase.firestore();
     db.collection('requests').doc(this.props.id).update({
-      active: false
+      state: 'cancelled'
     })
     .then(() => {
       console.log('Document successfully deleted.');
