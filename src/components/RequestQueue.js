@@ -19,13 +19,15 @@ class RequestQueue extends Component {
           Object.assign({}, { id: doc.id }, doc.data())
         );
       })
-      db.collection('requests').where('state', '==', 'in progress').get()
-      .then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-          requests.push(
-            Object.assign({}, { id: doc.id }, doc.data())
-          );
-        })
+      this.setState({ requests });
+    });
+    db.collection('requests').where('state', '==', 'in progress').get()
+    .then(querySnapshot => {
+      querySnapshot.forEach(doc => {
+        requests.push(
+          Object.assign({}, { id: doc.id }, doc.data())
+        );
+      })
       this.setState({ requests });
     });
   }
