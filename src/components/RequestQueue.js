@@ -12,13 +12,20 @@ class RequestQueue extends Component {
   componentDidMount() {
     let requests = [];
     const db = firebase.firestore();
-    db.collection('requests').where('active', '==', true).get()
+    db.collection('requests').where('state', '==', 'pending').get()
     .then(querySnapshot => {
       querySnapshot.forEach(doc => {
         requests.push(
           Object.assign({}, { id: doc.id }, doc.data())
         );
       })
+      db.collection('requests').where('state', '==', 'in progress').get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          requests.push(
+            Object.assign({}, { id: doc.id }, doc.data())
+          );
+        })
       this.setState({ requests });
     });
   }
