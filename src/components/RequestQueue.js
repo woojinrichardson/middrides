@@ -10,7 +10,7 @@ class RequestQueue extends Component {
   }
 
   componentDidMount() {
-    let requests = [];
+    const requests = [];
     const db = firebase.firestore();
     db.collection('requests').where('state', '==', 'pending').get()
     .then(querySnapshot => {
@@ -32,10 +32,10 @@ class RequestQueue extends Component {
     });
   }
 
-  deleteRequest = (event, id) => {
+  cancelRequest = (event, id) => {
     const db = firebase.firestore();
     db.collection('requests').doc(id).update({
-      active: false
+      state: 'cancelled'
     })
     .then(() => {
       const requests = this.state.requests.filter(request => request.id !== id);
@@ -44,18 +44,40 @@ class RequestQueue extends Component {
     event.preventDefault();
   }
 
+  makeInProgress = (event, id) => {
+    const db = firebase.firestore();
+    db.collection('requests').doc(id).update({
+      state: 'in progress'
+    })
+    .then(() => {
+      const updatedRequests = this.state.requests.map(request => {
+        if (request.id === id) {
+          return Object.assign({}, request, {state: 'in progress'})
+        }
+        return request
+      });
+      this.setState({ requests: updatedRequests })
+    });
+    event.preventDefault();
+  }
+
   render() {
     if (this.state.requests) {
+      const pendingRequests = this.state.requests.filter(request => request.state === 'pending');
+      const inProgressRequests = this.state.requests.filter(request => request.state === 'in progress');
       return (
         <table>
           <tbody>
-            {this.state.requests.map(request => (
+            {pendingRequests.map(request => (
               <tr key={request.user}>
                 <td>{request.name}</td>
                 <td>{request.passengers}</td>
                 <td>{request.from}</td>
                 <td>{request.to}</td>
-                <button onClick={event => this.deleteRequest(event, request.id)}>
+                <button onClick={event => this.makeInProgress(event, request.id)}>
+                Pick Up
+                </button>
+                <button onClick={event => this.cancelRequest(event, request.id)}>
                 Cancel Request
                 </button>
               </tr>
