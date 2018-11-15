@@ -49,7 +49,6 @@ class App extends Component {
         </div>
       );
     } else if (this.state.user) {
-      console.log(this.state.user)
       // contents = (
       //   <div>
       //     <RequestForm
