@@ -18,7 +18,7 @@ class CancelRequestButton extends Component {
       console.log('Document successfully deleted.');
     })
     .catch(error => {
-      this.setState({ error: error });
+      this.setState({ error });
     });
     event.preventDefault();
     this.props.complete();

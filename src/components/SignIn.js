@@ -22,7 +22,7 @@ class SignInButton extends Component {
         // history.push('/home');
       })
       .catch(error => {
-        this.setState({ error: error })
+        this.setState({ error })
       })
 
     event.preventDefault();
