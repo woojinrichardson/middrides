@@ -35,6 +35,32 @@ class App extends Component {
           this.setState({ isDispatcher });
         })
         .catch(error => console.log(error));
+
+        db.collection('requests')
+        .where('user', '==', user.uid)
+        .where('state', '==', 'pending')
+        .get()
+        .then(querySnapshot => {
+          if (!querySnapshot.empty) {
+            const request = querySnapshot.docs[0].data();
+            Object.assign(request, {id: querySnapshot.docs[0].id});
+            this.setState({ request });
+          }
+        })
+        .catch(error => console.log(error));
+
+        db.collection('requests')
+        .where('user', '==', user.uid)
+        .where('state', '==', 'in progress')
+        .get()
+        .then(querySnapshot => {
+          if (!querySnapshot.empty) {
+            const request = querySnapshot.docs[0].data();
+            Object.assign(request, {id: querySnapshot.docs[0].id});
+            this.setState({ request });
+          }
+        })
+        .catch(error => console.log(error));
       } else {
         this.setState({ user: null });
       }
@@ -48,8 +74,6 @@ class App extends Component {
         <div>
           <UserRequest
             request={this.state.request}
-            user={this.state.user.uid}
-            complete={request => this.setState({ request })}
           />
           <RequestForm
             complete={request => this.setState({ request })}
@@ -72,11 +96,6 @@ class App extends Component {
         } else {
           contents = (
             <div>
-              <UserRequest
-                request={this.state.request}
-                user={this.state.user.uid}
-                complete={request => this.setState({ request })}
-              />
               <RequestForm
                 user={this.state.user.uid}
                 complete={request => this.setState({ request })}
