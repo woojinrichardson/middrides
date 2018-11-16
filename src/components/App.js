@@ -43,11 +43,13 @@ class App extends Component {
 
   render() {
     let contents;
-    if (this.state.request) {
+    if (this.state.user && this.state.request) {
       contents = (
         <div>
           <UserRequest
             request={this.state.request}
+            user={this.state.user.uid}
+            complete={request => this.setState({ request })}
           />
           <RequestForm
             complete={request => this.setState({ request })}
@@ -70,6 +72,11 @@ class App extends Component {
         } else {
           contents = (
             <div>
+              <UserRequest
+                request={this.state.request}
+                user={this.state.user.uid}
+                complete={request => this.setState({ request })}
+              />
               <RequestForm
                 user={this.state.user.uid}
                 complete={request => this.setState({ request })}
