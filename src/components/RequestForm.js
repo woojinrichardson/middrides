@@ -21,9 +21,6 @@ class RequestForm extends Component {
   addRequest = event => {
     event.preventDefault();
     const db = firebase.firestore();
-    db.settings({
-      timestampsInSnapshots: true
-    })
     const request = {
       name: this.state.name,
       passengers: this.state.passengers,
