@@ -8,6 +8,7 @@ import RequestForm from './RequestForm';
 import CancelRequest from './CancelRequest';
 import RequestQueue from './RequestQueue';
 import UserRequest from './UserRequest';
+import MapContainer from './MapContainer';
 
 // import User from './User'
 
@@ -115,7 +116,11 @@ class App extends Component {
       );
     } else {
       return (
-        <SignIn />
+        <div>
+          <SignIn />
+          <MapContainer />
+        </div>
+
       );
     }
 
