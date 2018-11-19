@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Map, GoogleApiWrapper } from 'google-maps-react';
+import { firebase } from '../firebase/firebase';
+import { Map, Marker, GoogleApiWrapper } from 'google-maps-react';
 
 const style = {
   width: '100%',
@@ -8,18 +9,41 @@ const style = {
 
 const initialCenter = {
   lat: 44.0153,
-  lng:-73.1673
+  lng: -73.1673
 }
 
 export class MapContainer extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      lat: 0,
+      lng: 0,
+    };
+  }
+
+  componentDidMount() {
+    const db = firebase.firestore();
+    db.collection('vehicles').doc('bus')
+      .onSnapshot(doc => {
+        const lastPosition = doc.data().lastPosition;
+        this.setState({ lat: lastPosition.latitude, lng: lastPosition.longitude });
+      });
+  }
+
   render() {
+    console.log(this.state.lat, this.state.lng);
     return (
       <Map
         google={this.props.google}
         style={style}
         initialCenter={initialCenter}
         zoom={14}
-      />
+        disableDefaultUI={true}
+      >
+        <Marker
+          position={{lat: this.state.lat, lng: this.state.lng}}
+        />
+      </Map>
     );
   }
 }
