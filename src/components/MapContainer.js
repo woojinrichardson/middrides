@@ -31,7 +31,6 @@ export class MapContainer extends Component {
   }
 
   render() {
-    console.log(this.state.lat, this.state.lng);
     return (
       <Map
         google={this.props.google}
