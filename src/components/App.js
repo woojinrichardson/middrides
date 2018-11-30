@@ -27,12 +27,27 @@ class App extends Component {
       if (user) {
         this.setState({ user });
         const db = firebase.firebase.firestore();
-        db.settings({
-          timestampsInSnapshots: true
-        })
         db.collection('users').doc(user.uid).get()
         .then(doc => {
           const isDispatcher = doc.data().role === 'dispatcher';
+          if (isDispatcher) {
+            if ('geolocation' in navigator) {
+              const watchID = navigator.geolocation.watchPosition(
+                position => {
+                  db.collection('vehicles').doc('bus').update({
+                    lastPosition: new firebase.firebase.firestore.GeoPoint(position.coords.latitude, position.coords.longitude)
+                  })
+                  .then(() => console.log('Document successfully updated!'))
+                  .catch(error => console.log('Error updating document: ', error));
+                },
+                error => {
+                  alert('ERROR(' + error.code + '): ' + error.message);
+                }
+              );
+            } else {
+              console.log('Geolocation not available.');
+            }
+          }
           this.setState({ isDispatcher });
         })
         .catch(error => console.log(error));
@@ -69,9 +84,22 @@ class App extends Component {
   }
 
   render() {
-    let contents;
-    if (this.state.user && this.state.request) {
-      contents = (
+    if (!this.state.user) {
+      return (
+        <div>
+          <SignIn />
+          <MapContainer />
+        </div>
+      );
+    } else if (this.state.user && this.state.isDispatcher) {
+      return (
+        <div>
+          <RequestQueue />
+          <SignOut />
+        </div>
+      );
+    } else if (this.state.user && this.state.request) {
+      return (
         <div>
           <UserRequest
             request={this.state.request}
@@ -86,43 +114,95 @@ class App extends Component {
           <SignOut />
         </div>
       );
-    } else if (this.state.user) {
-        if (this.state.isDispatcher) {
-          contents = (
-            <div>
-              <RequestQueue />
-              <SignOut />
-            </div>
-          );
-        } else {
-          contents = (
-            <div>
-              <RequestForm
-                user={this.state.user.uid}
-                complete={request => this.setState({ request })}
-              />
-              <SignOut />
-            </div>
-          );
-        }
-    }
-
-    const isSignedIn = this.state.user;
-    if (isSignedIn) {
-      return (
-        <div>
-          {contents}
-        </div>
-      );
     } else {
       return (
         <div>
-          <SignIn />
-          <MapContainer />
+          <RequestForm
+            user={this.state.user.uid}
+            complete={request => this.setState({ request })}
+          />
+          <SignOut />
         </div>
-
       );
     }
+
+
+    // let contents;
+    // if (this.state.user && this.state.request) {
+    //   contents = (
+    //     <div>
+    //       <UserRequest
+    //         request={this.state.request}
+    //       />
+    //       <RequestForm
+    //         complete={request => this.setState({ request })}
+    //       />
+    //       <CancelRequest
+    //         id={this.state.request.id}
+    //         complete={() => this.setState({ request: null })}
+    //       />
+    //       <SignOut />
+    //     </div>
+    //   );
+    // } else if (this.state.user) {
+    //     if (this.state.isDispatcher) {
+    //       console.log('hi');
+    //
+    //       if ('geolocation' in navigator) {
+    //
+    //         const watchID = navigator.geolocation.watchPosition(
+    //           position => {
+    //             const db = firebase.firebase.firestore();
+    //             db.collection('vehicles').doc('bus').update({
+    //               lastPosition: position
+    //             })
+    //             .then(() => console.log('Document successfully updated!'))
+    //             .catch(error => console.log('Error updating document: ', error));
+    //           },
+    //           error => {
+    //             alert('ERROR(' + error.code + '): ' + error.message);
+    //           }
+    //         );
+    //       } else {
+    //         console.log('Geolocation not available.')
+    //         /* geolocation IS NOT available */
+    //       }
+    //
+    //       contents = (
+    //         <div>
+    //           <RequestQueue />
+    //           <SignOut />
+    //         </div>
+    //       );
+    //     } else {
+    //       contents = (
+    //         <div>
+    //           <RequestForm
+    //             user={this.state.user.uid}
+    //             complete={request => this.setState({ request })}
+    //           />
+    //           <SignOut />
+    //         </div>
+    //       );
+    //     }
+    // }
+    //
+    // const isSignedIn = this.state.user;
+    // if (isSignedIn) {
+    //   return (
+    //     <div>
+    //       {contents}
+    //     </div>
+    //   );
+    // } else {
+    //   return (
+    //     <div>
+    //       <SignIn />
+    //       <MapContainer />
+    //     </div>
+    //
+    //   );
+    // }
 
     // return (
     //   <div>

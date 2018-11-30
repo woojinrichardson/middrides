@@ -23,6 +23,9 @@ export class MapContainer extends Component {
 
   componentDidMount() {
     const db = firebase.firestore();
+    db.settings({
+      timestampsInSnapshots: true
+    })
     db.collection('vehicles').doc('bus')
       .onSnapshot(doc => {
         const lastPosition = doc.data().lastPosition;
