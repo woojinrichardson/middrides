@@ -5,30 +5,32 @@ class RequestQueue extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      requests: null,
+      pendingRequests: null,
+      inProgressRequests: null,
     };
   }
 
   componentDidMount() {
-    const requests = [];
     const db = firebase.firestore();
-    db.collection('requests').where('state', '==', 'pending').get()
-    .then(querySnapshot => {
+    db.collection('requests').where('state', '==', 'pending')
+    .onSnapshot(querySnapshot => {
+      const pendingRequests = [];
       querySnapshot.forEach(doc => {
-        requests.push(
+        pendingRequests.push(
           Object.assign({}, { id: doc.id }, doc.data())
         );
       })
-      this.setState({ requests });
+      this.setState({ pendingRequests });
     });
-    db.collection('requests').where('state', '==', 'in progress').get()
-    .then(querySnapshot => {
+    db.collection('requests').where('state', '==', 'in progress')
+    .onSnapshot(querySnapshot => {
+      const inProgressRequests = [];
       querySnapshot.forEach(doc => {
-        requests.push(
+        inProgressRequests.push(
           Object.assign({}, { id: doc.id }, doc.data())
         );
       })
-      this.setState({ requests });
+      this.setState({ inProgressRequests });
     });
   }
 
@@ -38,8 +40,9 @@ class RequestQueue extends Component {
       state: 'cancelled'
     })
     .then(() => {
-      const requests = this.state.requests.filter(request => request.id !== id);
-      this.setState({ requests })
+      // const pendingRequests = this.state.pendingRequests.filter(request => request.id !== id);
+      // const inProgressRequests = this.state.inProgressRequests.filter(request => request.id !== id);
+      // this.setState({ pendingRequests, inProgressRequests })
     });
     event.preventDefault();
   }
@@ -50,13 +53,12 @@ class RequestQueue extends Component {
       state: 'in progress'
     })
     .then(() => {
-      const updatedRequests = this.state.requests.map(request => {
-        if (request.id === id) {
-          return Object.assign({}, request, {state: 'in progress'})
-        }
-        return request
-      });
-      this.setState({ requests: updatedRequests })
+      // const oldRequest = this.state.pendingRequests.find(request => request.id === id);
+      // const pendingRequests = this.state.pendingRequests.filter(request => request.id === id);
+      // const inProgressRequests = this.state.inProgressRequests.slice().push(
+      //   Object.assign({}, oldRequest, {state: 'in progress'})
+      // );
+      // this.setState({ pendingRequests, inProgressRequests });
     });
     event.preventDefault();
   }
@@ -67,61 +69,56 @@ class RequestQueue extends Component {
       state: 'satisfied'
     })
     .then(() => {
-      const updatedRequests = this.state.requests.filter(request => request.id !== id);
-      this.setState({ requests: updatedRequests })
+      // const inProgressRequests = this.state.inProgressRequests.filter(request => request.id !== id);
+      // this.setState({ inProgressRequests })
     });
     event.preventDefault();
   }
 
   render() {
-    if (this.state.requests) {
-      const pendingRequests = this.state.requests.filter(request => request.state === 'pending');
-      const inProgressRequests = this.state.requests.filter(request => request.state === 'in progress');
-      return (
-        <div>
-          <table>
-            <caption><b>Pending Requests</b></caption>
-            <tbody>
-              {pendingRequests.map(request => (
-                <tr key={request.user}>
-                  <td>{request.name}</td>
-                  <td>{request.passengers}</td>
-                  <td>{request.from}</td>
-                  <td>{request.to}</td>
-                  <button onClick={event => this.makeInProgress(event, request.id)}>
-                  Pick Up
-                  </button>
-                  <button onClick={event => this.cancelRequest(event, request.id)}>
-                  Cancel Request
-                  </button>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <br/>
-          <table>
-            <caption><b>In Progress Requests</b></caption>
-            <tbody>
-              {inProgressRequests.map(request => (
-                <tr key={request.user}>
-                  <td>{request.name}</td>
-                  <td>{request.passengers}</td>
-                  <td>{request.from}</td>
-                  <td>{request.to}</td>
-                  <button onClick={event => this.makeSatisfied(event, request.id)}>
-                  Drop Off
-                  </button>
-                  <button onClick={event => this.cancelRequest(event, request.id)}>
-                  Cancel Request
-                  </button>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      );
-    }
-    return null;
+    return (
+      <div>
+        <table>
+          <caption><b>Pending Requests</b></caption>
+          {this.state.pendingRequests && <tbody>
+            {this.state.pendingRequests.map(request => (
+              <tr key={request.user}>
+                <td>{request.name}</td>
+                <td>{request.passengers}</td>
+                <td>{request.from}</td>
+                <td>{request.to}</td>
+                <button onClick={event => this.makeInProgress(event, request.id)}>
+                Pick Up
+                </button>
+                <button onClick={event => this.cancelRequest(event, request.id)}>
+                Cancel Request
+                </button>
+              </tr>
+            ))}
+          </tbody>}
+        </table>
+        <br/>
+        <table>
+          <caption><b>In Progress Requests</b></caption>
+          {this.state.inProgressRequests && <tbody>
+            {this.state.inProgressRequests.map(request => (
+              <tr key={request.user}>
+                <td>{request.name}</td>
+                <td>{request.passengers}</td>
+                <td>{request.from}</td>
+                <td>{request.to}</td>
+                <button onClick={event => this.makeSatisfied(event, request.id)}>
+                Drop Off
+                </button>
+                <button onClick={event => this.cancelRequest(event, request.id)}>
+                Cancel Request
+                </button>
+              </tr>
+            ))}
+          </tbody>}
+        </table>
+      </div>
+    );
   }
 }
 
