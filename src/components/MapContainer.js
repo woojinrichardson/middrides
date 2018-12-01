@@ -3,8 +3,13 @@ import { firebase } from '../firebase/firebase';
 import { Map, Marker, GoogleApiWrapper } from 'google-maps-react';
 
 const style = {
-  width: '100%',
-  height: '100%'
+  width: '50%',
+  height: '50%',
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  marginRight: '-50%',
+  transform: 'translate(-50%, -50%)',
 };
 
 const initialCenter = {
