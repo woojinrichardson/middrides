@@ -101,9 +101,7 @@ class App extends Component {
     } else if (this.state.user && this.state.request) {
       return (
         <div>
-          <UserRequest
-            request={this.state.request}
-          />
+          <MapContainer />
           <RequestForm
             complete={request => this.setState({ request })}
           />
@@ -117,6 +115,7 @@ class App extends Component {
     } else {
       return (
         <div>
+          <MapContainer />
           <RequestForm
             user={this.state.user.uid}
             complete={request => this.setState({ request })}
