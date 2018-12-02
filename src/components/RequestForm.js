@@ -1,5 +1,35 @@
 import React, { Component } from 'react';
 import { firebase } from '../firebase/firebase';
+import { Button, Form } from 'semantic-ui-react';
+
+const numbers = [
+  { text: '1', value: '1' },
+  { text: '2', value: '2' },
+  { text: '3', value: '3' },
+  { text: '4', value: '4' },
+  { text: '5', value: '5' },
+  { text: '6', value: '6' },
+  { text: '7', value: '7' },
+  { text: '8', value: '8' },
+  { text: '9', value: '9' },
+  { text: '10', value: '10' },
+  { text: '11', value: '11' },
+  { text: '12', value: '12' },
+  { text: '13', value: '13' },
+  { text: '14', value: '14' },
+];
+
+const locations = [
+  { text: 'Adirondack Circle', value: 'adirondack circle' },
+  { text: 'Track Lot/KDR', value: 'track lot/kdr' },
+  { text: 'E Lot', value: 'e lot' },
+  { text: 'R Lot', value: 'r lot' },
+  { text: 'T Lot', value: 't lot' },
+  { text: 'Q Lot', value: 'q lot' },
+  { text: 'Robert A. Jones \'59 House', value: 'robert a. jones \'59 House' },
+  { text: 'McCullough Student Center', value: 'mccullough student center' },
+  { text: 'Frog Hollow', value: 'frog hollow' },
+];
 
 class RequestForm extends Component {
   constructor(props) {
@@ -7,15 +37,15 @@ class RequestForm extends Component {
     this.state = {
       name: '',
       passengers: '',
-      from: '',
-      to: '',
+      pickup: '',
+      dropoff: '',
     };
   }
 
-  handleInput = event => {
+  handleInput = (event, data) => {
     this.setState({
-      [event.target.name]: event.target.value
-    })
+      [data.name]: data.value
+    });
   }
 
   handleSubmit = event => {
@@ -23,8 +53,8 @@ class RequestForm extends Component {
     const request = {
       name: this.state.name,
       passengers: this.state.passengers,
-      from: this.state.from,
-      to: this.state.to,
+      pickup: this.state.pickup,
+      dropoff: this.state.dropoff,
       user: this.props.user,
       state: 'pending',
     };
@@ -35,38 +65,43 @@ class RequestForm extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <input
-          type="text"
-          name="name"
-          placeholder="Name"
-          onChange={this.handleInput}
-          value={this.state.name}
-        />
-        <input
-          type="text"
-          name="passengers"
-          placeholder="Number of Passengers"
-          onChange={this.handleInput}
-          value={this.state.passengers}
-        />
-        <input
-          type="text"
-          name="from"
-          placeholder="From"
-          onChange={this.handleInput}
-          value={this.state.from}
-        />
-        <input
-          type="text"
-          name="to"
-          placeholder="To"
-          onChange={this.handleInput}
-          value={this.state.to}
-        />
-        <button type="submit">Submit</button>
-        <button onClick={this.handleCancel}>Cancel</button>
-      </form>
+      <Form onSubmit={this.handleSubmit}>
+        <Form.Group>
+          <Form.Input
+            label='Name'
+            placeholder='Name'
+            name='name'
+            value={this.state.name}
+            onChange={this.handleInput}
+          />
+          <Form.Select
+            label='Number of Passengers'
+            placeholder='0'
+            name='passengers'
+            options={numbers}
+            value={this.state.passengers}
+            onChange={this.handleInput}
+          />
+          <Form.Select
+            label='Pickup Location'
+            placeholder='Select Pickup Location'
+            name='pickup'
+            options={locations}
+            value={this.state.pickup}
+            onChange={this.handleInput}
+          />
+          <Form.Select
+            label='Dropoff Location'
+            placeholder='Select Dropoff Location'
+            name='dropoff'
+            options={locations}
+            value={this.state.dropoff}
+            onChange={this.handleInput}
+          />
+        </Form.Group>
+        <Button type='submit'>Submit</Button>
+        <Button onClick={this.handleCancel}>Cancel</Button>
+      </Form>
     );
   }
 }
