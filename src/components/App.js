@@ -19,6 +19,7 @@ class App extends Component {
       user: null,
       request: null,
       isDispatcher: false,
+      mode: 'view',
     };
   }
 
@@ -87,42 +88,51 @@ class App extends Component {
     if (!this.state.user) {
       return (
         <div>
+          <MapContainer />
           <SignIn />
-          <MapContainer />
         </div>
       );
-    } else if (this.state.user && this.state.isDispatcher) {
-      return (
-        <div>
-          <RequestQueue />
-          <SignOut />
-        </div>
+    } else if (this.state.user) {
+      const requestRideButton = (
+        <button onClick={() => this.setState({ mode: 'request form' })}>
+          Request Ride
+        </button>
       );
-    } else if (this.state.user && this.state.request) {
-      return (
-        <div>
-          <MapContainer />
-          <RequestForm
-            complete={request => this.setState({ request })}
-          />
-          <CancelRequest
-            id={this.state.request.id}
-            complete={() => this.setState({ request: null })}
-          />
-          <SignOut />
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          <MapContainer />
+      if (this.state.mode === 'request form') {
+        return (
           <RequestForm
             user={this.state.user.uid}
-            complete={request => this.setState({ request })}
+            complete={request => this.setState({ request, mode: 'view' })}
           />
-          <SignOut />
-        </div>
-      );
+        );
+      } else if (this.state.isDispatcher) {
+        return (
+          <div>
+            <RequestQueue />
+            {requestRideButton}
+            <SignOut />
+          </div>
+        );
+      } else if (this.state.request) {
+        return (
+          <div>
+            <MapContainer />
+            <CancelRequest
+              id={this.state.request.id}
+              complete={() => this.setState({ request: null })}
+            />
+            <SignOut />
+          </div>
+        );
+      } else {
+        return (
+          <div>
+            <MapContainer />
+            {requestRideButton}
+            <SignOut />
+          </div>
+        );
+      }
     }
 
 
