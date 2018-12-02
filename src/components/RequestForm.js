@@ -31,6 +31,8 @@ class RequestForm extends Component {
     this.props.complete(request);
   }
 
+  handleCancel = () => this.props.complete()
+
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
@@ -63,6 +65,7 @@ class RequestForm extends Component {
           value={this.state.to}
         />
         <button type="submit">Submit</button>
+        <button onClick={this.handleCancel}>Cancel</button>
       </form>
     );
   }
