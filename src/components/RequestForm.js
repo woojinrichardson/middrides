@@ -18,9 +18,8 @@ class RequestForm extends Component {
     })
   }
 
-  addRequest = event => {
+  handleSubmit = event => {
     event.preventDefault();
-    const db = firebase.firestore();
     const request = {
       name: this.state.name,
       passengers: this.state.passengers,
@@ -28,19 +27,13 @@ class RequestForm extends Component {
       to: this.state.to,
       user: this.props.user,
       state: 'pending',
-    }
-    db.collection('requests').add(
-      request
-    )
-    .then(documentReference => {
-      Object.assign(request, {id: documentReference.id });
-      this.props.complete(request)
-    });
+    };
+    this.props.complete(request);
   }
 
   render() {
     return (
-      <form onSubmit={this.addRequest}>
+      <form onSubmit={this.handleSubmit}>
         <input
           type="text"
           name="name"

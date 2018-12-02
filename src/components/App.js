@@ -84,6 +84,20 @@ class App extends Component {
     });
   }
 
+  handleFormReturn = request => {
+    if (request) {
+      const db = firebase.firebase.firestore();
+      db.collection('requests').add(
+        request
+      )
+      .then(documentReference => {
+        Object.assign(request, {id: documentReference.id });
+        this.setState({ request });
+      });
+    }
+    this.setState({ mode: 'view' });
+  }
+
   render() {
     if (!this.state.user) {
       return (
@@ -102,7 +116,7 @@ class App extends Component {
         return (
           <RequestForm
             user={this.state.user.uid}
-            complete={request => this.setState({ request, mode: 'view' })}
+            complete={request => this.handleFormReturn(request)}
           />
         );
       } else if (this.state.isDispatcher) {
