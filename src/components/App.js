@@ -107,9 +107,9 @@ class App extends Component {
         </div>
       );
     } else if (this.state.user) {
-      const requestRideButton = (
+      const requestFormButton = (
         <button onClick={() => this.setState({ mode: 'request form' })}>
-          Request Ride
+          {this.state.isDispatcher ? 'Add Ride' : 'Request Ride'}
         </button>
       );
       if (this.state.mode === 'request form') {
@@ -123,7 +123,7 @@ class App extends Component {
         return (
           <div>
             <RequestQueue />
-            {requestRideButton}
+            {requestFormButton}
             <SignOut />
           </div>
         );
@@ -142,7 +142,7 @@ class App extends Component {
         return (
           <div>
             <MapContainer />
-            {requestRideButton}
+            {requestFormButton}
             <SignOut />
           </div>
         );
