@@ -102,7 +102,6 @@ class App extends Component {
     if (!this.state.user) {
       return (
         <div>
-          <MapContainer />
           <SignIn />
         </div>
       );

@@ -65,7 +65,7 @@ class RequestForm extends Component {
 
   render() {
     return (
-      <Grid verticalAlign='middle' columns={1} centered style={{minHeight: '100vh'}}>
+      <Grid centered verticalAlign='middle' style={{minHeight: '100vh'}} >
         <Grid.Row>
           <Grid.Column width={10} >
             <Segment>

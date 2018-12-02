@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 // import { withRouter } from 'react-router-dom';
 import { auth } from '../firebase';
 import { firebase } from '../firebase/firebase';
+import { Button } from 'semantic-ui-react';
 
 class SignInButton extends Component {
   constructor(props) {
@@ -35,7 +36,7 @@ class SignInButton extends Component {
 
     return (
       <div>
-        <button onClick={this.onClick}>Google Sign-In</button>
+        <Button primary size='massive' onClick={this.onClick}>Sign in with Middlebury email</Button>
         { error && <p>{error.message}</p>}
       </div>
     );
