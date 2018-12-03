@@ -1,12 +1,10 @@
 import React from 'react';
 import { auth } from '../firebase';
+import { Menu } from 'semantic-ui-react';
 
 const SignOutButton = () =>
-  <button
-    type="button"
-    onClick={auth.signOut}
-  >
+  <Menu.Item name='sign out' onClick={auth.signOut}>
     Sign out
-  </button>
+  </Menu.Item>
 
 export default SignOutButton;

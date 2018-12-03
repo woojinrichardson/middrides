@@ -9,7 +9,7 @@ import CancelRequest from './CancelRequest';
 import RequestQueue from './RequestQueue';
 import UserRequest from './UserRequest';
 import MapContainer from './MapContainer';
-import { Grid } from 'semantic-ui-react';
+import { Grid, Menu } from 'semantic-ui-react';
 
 // import User from './User'
 
@@ -120,6 +120,15 @@ class App extends Component {
           {this.state.isDispatcher ? 'Add Ride' : 'Request Ride'}
         </button>
       );
+
+      const menu = (
+        <Menu>
+          <Menu.Menu position='right'>
+            <SignOut />
+          </Menu.Menu>
+        </Menu>
+      );
+
       if (this.state.mode === 'request form') {
         return (
           <RequestForm
@@ -138,20 +147,20 @@ class App extends Component {
       } else if (this.state.request) {
         return (
           <div>
+            {menu}
             <MapContainer />
             <CancelRequest
               id={this.state.request.id}
               complete={() => this.setState({ request: null })}
             />
-            <SignOut />
           </div>
         );
       } else {
         return (
           <div>
+            {menu}
             <MapContainer />
             {requestFormButton}
-            <SignOut />
           </div>
         );
       }
