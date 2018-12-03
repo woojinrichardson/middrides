@@ -9,6 +9,7 @@ import CancelRequest from './CancelRequest';
 import RequestQueue from './RequestQueue';
 import UserRequest from './UserRequest';
 import MapContainer from './MapContainer';
+import { Grid } from 'semantic-ui-react';
 
 // import User from './User'
 
@@ -28,6 +29,9 @@ class App extends Component {
       if (user) {
         this.setState({ user });
         const db = firebase.firebase.firestore();
+        db.settings({
+          timestampsInSnapshots: true
+        })
         db.collection('users').doc(user.uid).get()
         .then(doc => {
           const isDispatcher = doc.data().role === 'dispatcher';
@@ -101,9 +105,14 @@ class App extends Component {
   render() {
     if (!this.state.user) {
       return (
-        <div>
-          <SignIn />
-        </div>
+        <Grid textAlign='center' verticalAlign='middle' style={{minHeight: '100vh'}}>
+          <Grid.Row>
+            <Grid.Column>
+              <h1 style={{fontSize: '100px', fontWeight: '1'}}>Midd Rides</h1>
+              <SignIn />
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
       );
     } else if (this.state.user) {
       const requestFormButton = (
