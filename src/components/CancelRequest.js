@@ -32,7 +32,7 @@ class CancelRequestButton extends Component {
 
     return (
       <div>
-        <Button onClick={this.onClick}>Cancel Request</Button>
+        <Button fluid negative style={{marginTop: '15px'}} onClick={this.onClick}>Cancel Request</Button>
         { error && <p>{error.message}</p>}
       </div>
     );

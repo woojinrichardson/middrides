@@ -118,7 +118,7 @@ class App extends Component {
     } else if (this.state.user) {
 
       const requestFormButton = (
-        <Button primary fluid style={{marginTop: '15px'}}onClick={() => this.setState({ mode: 'request form' })}>
+        <Button primary fluid style={{marginTop: '15px'}} onClick={() => this.setState({ mode: 'request form' })}>
           {this.state.isDispatcher ? 'Add Ride' : 'Request Ride'}
         </Button>
       );
@@ -151,10 +151,14 @@ class App extends Component {
           <div>
             {menu}
             <MapContainer />
-            <CancelRequest
-              id={this.state.request.id}
-              complete={() => this.setState({ request: null })}
-            />
+            <Grid textAlign='center'>
+              <Grid.Column width={3}>
+              <CancelRequest
+                id={this.state.request.id}
+                complete={() => this.setState({ request: null })}
+              />
+              </Grid.Column>
+            </Grid>
           </div>
         );
       } else {
