@@ -9,7 +9,7 @@ import CancelRequest from './CancelRequest';
 import RequestQueue from './RequestQueue';
 import UserRequest from './UserRequest';
 import MapContainer from './MapContainer';
-import { Grid, Menu } from 'semantic-ui-react';
+import { Button, Grid, Menu } from 'semantic-ui-react';
 
 // import User from './User'
 
@@ -102,23 +102,25 @@ class App extends Component {
     this.setState({ mode: 'view' });
   }
 
+// <h1 style={{fontSize: '100px', fontWeight: '1'}}>Midd Rides</h1>
+
   render() {
     if (!this.state.user) {
       return (
         <Grid textAlign='center' verticalAlign='middle' style={{minHeight: '100vh'}}>
           <Grid.Row>
             <Grid.Column>
-              <h1 style={{fontSize: '100px', fontWeight: '1'}}>Midd Rides</h1>
               <SignIn />
             </Grid.Column>
           </Grid.Row>
         </Grid>
       );
     } else if (this.state.user) {
+
       const requestFormButton = (
-        <button onClick={() => this.setState({ mode: 'request form' })}>
+        <Button primary fluid style={{marginTop: '15px'}}onClick={() => this.setState({ mode: 'request form' })}>
           {this.state.isDispatcher ? 'Add Ride' : 'Request Ride'}
-        </button>
+        </Button>
       );
 
       const menu = (
@@ -160,7 +162,12 @@ class App extends Component {
           <div>
             {menu}
             <MapContainer />
-            {requestFormButton}
+            <Grid textAlign='center'>
+              <Grid.Column width={3}>
+                {requestFormButton}
+              </Grid.Column>
+            </Grid>
+
           </div>
         );
       }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { firebase } from '../firebase/firebase';
+import { Button } from 'semantic-ui-react';
 
 class CancelRequestButton extends Component {
   constructor(props) {
@@ -31,7 +32,7 @@ class CancelRequestButton extends Component {
 
     return (
       <div>
-        <button onClick={this.onClick}>Cancel Request</button>
+        <Button onClick={this.onClick}>Cancel Request</Button>
         { error && <p>{error.message}</p>}
       </div>
     );
