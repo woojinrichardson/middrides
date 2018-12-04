@@ -34,11 +34,17 @@ const locations = [
 class RequestForm extends Component {
   constructor(props) {
     super(props);
+
+    const name = props.request ? props.request.name : '';
+    const passengers = props.request ? props.request.passengers : '';
+    const pickup = props.request ? props.request.pickup : '';
+    const dropoff = props.request ? props.request.dropoff : '';
+
     this.state = {
-      name: '',
-      passengers: '',
-      pickup: '',
-      dropoff: '',
+      name: name,
+      passengers: passengers,
+      pickup: pickup,
+      dropoff: dropoff,
     };
   }
 

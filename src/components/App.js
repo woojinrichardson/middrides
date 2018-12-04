@@ -123,6 +123,12 @@ class App extends Component {
         </Button>
       );
 
+      const editRequestButton = (
+        <Button fluid style={{marginTop: '20px'}} onClick={() => this.setState({ mode: 'request form' })}>
+          Edit Request
+        </Button>
+      );
+
       const menu = (
         <Menu fixed='top' inverted>
           <Menu.Menu position='right'>
@@ -135,6 +141,7 @@ class App extends Component {
         return (
           <RequestForm
             user={this.state.user.uid}
+            request={this.state.isDispatcher ? null : this.state.request}
             complete={request => this.handleFormReturn(request)}
           />
         );
@@ -153,10 +160,13 @@ class App extends Component {
             <MapContainer />
             <Grid textAlign='center'>
               <Grid.Column width={3}>
-              <CancelRequest
-                id={this.state.request.id}
-                complete={() => this.setState({ request: null })}
-              />
+                {editRequestButton}
+              </Grid.Column>
+              <Grid.Column width={3}>
+                <CancelRequest
+                  id={this.state.request.id}
+                  complete={() => this.setState({ request: null })}
+                />
               </Grid.Column>
             </Grid>
           </div>
