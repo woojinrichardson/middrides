@@ -69,6 +69,13 @@ class RequestForm extends Component {
 
   handleCancel = () => this.props.complete()
 
+  isDisabled = () =>
+    this.state.name === '' ||
+    this.state.passengers === '' ||
+    this.state.pickup === '' ||
+    this.state.dropoff === '' ||
+    this.state.pickup === this.state.dropoff;
+
   render() {
     return (
       <Grid centered verticalAlign='middle' style={{minHeight: '100vh'}}>
@@ -108,7 +115,7 @@ class RequestForm extends Component {
                   onChange={this.handleInput}
                 />
                 <Form.Group inline>
-                  <Form.Button primary>Submit</Form.Button>
+                  <Form.Button primary disabled={this.isDisabled()}>Submit</Form.Button>
                   <Form.Button onClick={this.handleCancel}>Cancel</Form.Button>
                 </Form.Group>
               </Form>
