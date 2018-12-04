@@ -118,13 +118,13 @@ class App extends Component {
     } else if (this.state.user) {
 
       const requestFormButton = (
-        <Button primary fluid style={{marginTop: '15px'}} onClick={() => this.setState({ mode: 'request form' })}>
+        <Button primary fluid style={{marginTop: '20px'}} onClick={() => this.setState({ mode: 'request form' })}>
           {this.state.isDispatcher ? 'Add Ride' : 'Request Ride'}
         </Button>
       );
 
       const menu = (
-        <Menu>
+        <Menu fixed='top' inverted>
           <Menu.Menu position='right'>
             <SignOut />
           </Menu.Menu>

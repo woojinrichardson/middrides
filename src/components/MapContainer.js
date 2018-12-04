@@ -14,7 +14,7 @@ const style = {
 
 const containerStyle = {
   width: '1280px',
-  height: '500px',
+  height: '570px',
   position: 'relative',
 };
 
