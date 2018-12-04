@@ -142,7 +142,10 @@ class App extends Component {
       );
 
       const menu = (
-        <Menu fixed='top' inverted>
+        <Menu fixed='top' inverted style={{height: '50px'}}>
+          <Menu.Item header style={{fontFamily: 'Helvetica', fontWeight: '300', fontSize: 'larger'}}>
+            Midd Rides
+          </Menu.Item>
           <Menu.Menu position='right'>
             <SignOut />
           </Menu.Menu>
