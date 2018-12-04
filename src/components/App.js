@@ -90,14 +90,26 @@ class App extends Component {
 
   handleFormReturn = request => {
     if (request) {
-      const db = firebase.firebase.firestore();
-      db.collection('requests').add(
-        request
-      )
-      .then(documentReference => {
-        Object.assign(request, {id: documentReference.id });
-        this.setState({ request });
-      });
+      if (this.state.request) {
+        const db = firebase.firebase.firestore();
+        db.collection('requests').doc(this.state.request.id).set(
+          request,
+          { merge: true }
+        )
+        .then(() => {
+          const updatedRequest = Object.assign({}, this.state.request, request);
+          this.setState({ request: updatedRequest });
+        });
+      } else {
+        const db = firebase.firebase.firestore();
+        db.collection('requests').add(
+          request
+        )
+        .then(documentReference => {
+          Object.assign(request, {id: documentReference.id });
+          this.setState({ request });
+        });
+      }
     }
     this.setState({ mode: 'view' });
   }
