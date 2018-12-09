@@ -114,8 +114,6 @@ class App extends Component {
     this.setState({ mode: 'view' });
   }
 
-  // <h1 style={{fontFamily: 'Helvetica', fontWeight: '100', fontSize: '100px'}}>Midd Rides</h1>
-
   render() {
     const menu = (
       <Menu fixed='top' inverted style={{height: '50px'}}>
@@ -197,97 +195,6 @@ class App extends Component {
         );
       }
     }
-
-
-    // let contents;
-    // if (this.state.user && this.state.request) {
-    //   contents = (
-    //     <div>
-    //       <UserRequest
-    //         request={this.state.request}
-    //       />
-    //       <RequestForm
-    //         complete={request => this.setState({ request })}
-    //       />
-    //       <CancelRequest
-    //         id={this.state.request.id}
-    //         complete={() => this.setState({ request: null })}
-    //       />
-    //       <SignOut />
-    //     </div>
-    //   );
-    // } else if (this.state.user) {
-    //     if (this.state.isDispatcher) {
-    //       console.log('hi');
-    //
-    //       if ('geolocation' in navigator) {
-    //
-    //         const watchID = navigator.geolocation.watchPosition(
-    //           position => {
-    //             const db = firebase.firebase.firestore();
-    //             db.collection('vehicles').doc('bus').update({
-    //               lastPosition: position
-    //             })
-    //             .then(() => console.log('Document successfully updated!'))
-    //             .catch(error => console.log('Error updating document: ', error));
-    //           },
-    //           error => {
-    //             alert('ERROR(' + error.code + '): ' + error.message);
-    //           }
-    //         );
-    //       } else {
-    //         console.log('Geolocation not available.')
-    //         /* geolocation IS NOT available */
-    //       }
-    //
-    //       contents = (
-    //         <div>
-    //           <RequestQueue />
-    //           <SignOut />
-    //         </div>
-    //       );
-    //     } else {
-    //       contents = (
-    //         <div>
-    //           <RequestForm
-    //             user={this.state.user.uid}
-    //             complete={request => this.setState({ request })}
-    //           />
-    //           <SignOut />
-    //         </div>
-    //       );
-    //     }
-    // }
-    //
-    // const isSignedIn = this.state.user;
-    // if (isSignedIn) {
-    //   return (
-    //     <div>
-    //       {contents}
-    //     </div>
-    //   );
-    // } else {
-    //   return (
-    //     <div>
-    //       <SignIn />
-    //       <MapContainer />
-    //     </div>
-    //
-    //   );
-    // }
-
-    // return (
-    //   <div>
-    //     {button}
-    //   </div>
-    //   // <Router>
-    //   //   <div>
-    //   //     <Route path="/signin" component={SignIn} />
-    //   //     <Route path="/home" component={SignOut} />
-    //   //     <Redirect from="/" to="/signin" />
-    //   //   </div>
-    //   // </Router>
-    // );
   }
 }
 
