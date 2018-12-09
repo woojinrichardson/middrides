@@ -29,9 +29,6 @@ class App extends Component {
       if (user) {
         this.setState({ user });
         const db = firebase.firebase.firestore();
-        db.settings({
-          timestampsInSnapshots: true
-        })
         db.collection('users').doc(user.uid).get()
         .then(doc => {
           const isDispatcher = doc.data().role === 'dispatcher';
@@ -115,6 +112,7 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.state.isDispatcher)
     const menu = (
       <Menu fixed='top' inverted style={{height: '50px'}}>
         <Menu.Item header style={{fontFamily: 'Helvetica', fontWeight: '500', fontSize: 'large'}}>
