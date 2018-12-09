@@ -112,9 +112,8 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state.isDispatcher)
     const menu = (
-      <Menu fixed='top' inverted style={{height: '50px'}}>
+      <Menu fixed='top' inverted style={{height: '60px'}}>
         <Menu.Item header style={{fontFamily: 'Helvetica', fontWeight: '500', fontSize: 'large'}}>
           Midd Rides
         </Menu.Item>
@@ -134,7 +133,7 @@ class App extends Component {
     } else if (this.state.user) {
 
       const requestFormButton = (
-        <Button primary fluid style={{marginTop: '20px'}} onClick={() => this.setState({ mode: 'request form' })}>
+        <Button color={this.state.isDispatcher ? 'teal' : 'blue'} fluid style={{marginTop: '20px'}} onClick={() => this.setState({ mode: 'request form' })}>
           {this.state.isDispatcher ? 'Add Ride' : 'Request Ride'}
         </Button>
       );
@@ -156,9 +155,14 @@ class App extends Component {
       } else if (this.state.isDispatcher) {
         return (
           <div>
-            <RequestQueue />
-            {requestFormButton}
-            <SignOut />
+            {menu}
+            <Grid centered verticalAlign='middle' style={{minHeight: '100vh'}}>
+              <Grid.Row>
+                <Grid.Column width={13}>
+                  <RequestQueue />
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
           </div>
         );
       } else if (this.state.request) {

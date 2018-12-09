@@ -20,15 +20,15 @@ const numbers = [
 ];
 
 const locations = [
-  { text: 'Adirondack Circle', value: 'adirondack circle' },
-  { text: 'Track Lot/KDR', value: 'track lot/kdr' },
-  { text: 'E Lot', value: 'e lot' },
-  { text: 'R Lot', value: 'r lot' },
-  { text: 'T Lot', value: 't lot' },
-  { text: 'Q Lot', value: 'q lot' },
-  { text: 'Robert A. Jones \'59 House', value: 'robert a. jones \'59 House' },
-  { text: 'McCullough Student Center', value: 'mccullough student center' },
-  { text: 'Frog Hollow', value: 'frog hollow' },
+  { text: 'Adirondack Circle', value: 'Adirondack Circle' },
+  { text: 'Track Lot/KDR', value: 'Track Lot/KDR' },
+  { text: 'E Lot', value: 'E Lot' },
+  { text: 'R Lot', value: 'R Lot' },
+  { text: 'T Lot', value: 'T Lot' },
+  { text: 'Q Lot', value: 'Q Lot' },
+  { text: 'Robert A. Jones \'59 House', value: 'Robert A. Jones \'59 House' },
+  { text: 'McCullough Student Center', value: 'McCullough Student Center' },
+  { text: 'Frog Hollow', value: 'Frog Hollow' },
 ];
 
 class RequestForm extends Component {
