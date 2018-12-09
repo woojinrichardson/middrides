@@ -117,15 +117,23 @@ class App extends Component {
   // <h1 style={{fontFamily: 'Helvetica', fontWeight: '100', fontSize: '100px'}}>Midd Rides</h1>
 
   render() {
+    const menu = (
+      <Menu fixed='top' inverted style={{height: '50px'}}>
+        <Menu.Item header style={{fontFamily: 'Helvetica', fontWeight: '500', fontSize: 'large'}}>
+          Midd Rides
+        </Menu.Item>
+        <Menu.Menu position='right'>
+          {this.state.user ? <SignOut /> : <SignIn />}
+        </Menu.Menu>
+      </Menu>
+    );
+
     if (!this.state.user) {
       return (
-        <Grid textAlign='center' verticalAlign='middle' style={{minHeight: '100vh'}}>
-          <Grid.Row>
-            <Grid.Column>
-              <SignIn />
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
+        <div>
+          {menu}
+          <MapContainer />
+        </div>
       );
     } else if (this.state.user) {
 
@@ -139,17 +147,6 @@ class App extends Component {
         <Button fluid style={{marginTop: '20px'}} onClick={() => this.setState({ mode: 'request form' })}>
           Edit Request
         </Button>
-      );
-
-      const menu = (
-        <Menu fixed='top' inverted style={{height: '50px'}}>
-          <Menu.Item header style={{fontFamily: 'Helvetica', fontWeight: '500', fontSize: 'large'}}>
-            Midd Rides
-          </Menu.Item>
-          <Menu.Menu position='right'>
-            <SignOut />
-          </Menu.Menu>
-        </Menu>
       );
 
       if (this.state.mode === 'request form') {
@@ -196,7 +193,6 @@ class App extends Component {
                 {requestFormButton}
               </Grid.Column>
             </Grid>
-
           </div>
         );
       }
