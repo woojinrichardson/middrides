@@ -62,7 +62,7 @@ class RequestForm extends Component {
       pickup: this.state.pickup,
       dropoff: this.state.dropoff,
       user: this.props.user,
-      state: 'pending',
+      state: this.props.initialState,
     };
     this.props.complete(request);
   }

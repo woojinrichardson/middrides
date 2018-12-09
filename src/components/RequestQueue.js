@@ -79,8 +79,8 @@ class RequestQueue extends Component {
   render() {
     return (
       <div>
-        <Header>Pending</Header>
-        <Table celled style={{marginBottom: '50px'}}>
+        <Header style={{marginTop: '40px'}}>Pending</Header>
+        <Table celled>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Name</Table.HeaderCell>
@@ -90,6 +90,7 @@ class RequestQueue extends Component {
               <Table.HeaderCell textAlign='center'>Actions</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
+
           <Table.Body>
             {this.state.pendingRequests.map(request => (
               <Table.Row>
@@ -104,7 +105,18 @@ class RequestQueue extends Component {
               </Table.Row>
             ))}
           </Table.Body>
+
+          <Table.Footer>
+            <Table.Row>
+              <Table.HeaderCell colSpan='5'>
+                <Button floated='left' primary onClick={this.props.addPendingRequest}>
+                  Add Request
+                </Button>
+              </Table.HeaderCell>
+            </Table.Row>
+          </Table.Footer>
         </Table>
+
         <Header>In Progress</Header>
         <Table celled>
           <Table.Header>
@@ -116,6 +128,7 @@ class RequestQueue extends Component {
               <Table.HeaderCell textAlign='center'>Actions</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
+
           <Table.Body>
             {this.state.inProgressRequests.map(request => (
               <Table.Row>
@@ -130,6 +143,16 @@ class RequestQueue extends Component {
               </Table.Row>
             ))}
           </Table.Body>
+
+          <Table.Footer>
+            <Table.Row>
+              <Table.HeaderCell colSpan='5'>
+                <Button floated='left' primary onClick={this.props.addInProgressRrequest}>
+                  Add Request
+                </Button>
+              </Table.HeaderCell>
+            </Table.Row>
+          </Table.Footer>
         </Table>
       </div>
     );

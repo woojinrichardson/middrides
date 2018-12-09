@@ -21,6 +21,7 @@ class App extends Component {
       request: null,
       isDispatcher: false,
       mode: 'view',
+      initialState: 'pending',
     };
   }
 
@@ -150,6 +151,7 @@ class App extends Component {
             user={this.state.user.uid}
             request={this.state.isDispatcher ? null : this.state.request}
             complete={request => this.handleFormReturn(request)}
+            initialState={this.state.initialState}
           />
         );
       } else if (this.state.isDispatcher) {
@@ -159,7 +161,10 @@ class App extends Component {
             <Grid centered verticalAlign='middle' style={{minHeight: '100vh'}}>
               <Grid.Row>
                 <Grid.Column width={13}>
-                  <RequestQueue />
+                  <RequestQueue
+                    addPendingRequest={() => this.setState({ mode: 'request form', initialState: 'pending' })}
+                    addInProgressRrequest={() => this.setState({ mode: 'request form', initialState: 'in progress' })}
+                  />
                 </Grid.Column>
               </Grid.Row>
             </Grid>
