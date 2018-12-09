@@ -90,7 +90,7 @@ class App extends Component {
 
   handleFormReturn = request => {
     if (request) {
-      if (this.state.request) {
+      if (this.state.request && !this.state.isDispatcher) {
         const db = firebase.firebase.firestore();
         db.collection('requests').doc(this.state.request.id).set(
           request,
@@ -114,7 +114,7 @@ class App extends Component {
     this.setState({ mode: 'view' });
   }
 
-// <h1 style={{fontSize: '100px', fontWeight: '1'}}>Midd Rides</h1>
+  // <h1 style={{fontFamily: 'Helvetica', fontWeight: '100', fontSize: '100px'}}>Midd Rides</h1>
 
   render() {
     if (!this.state.user) {
@@ -143,7 +143,7 @@ class App extends Component {
 
       const menu = (
         <Menu fixed='top' inverted style={{height: '50px'}}>
-          <Menu.Item header style={{fontFamily: 'Helvetica', fontWeight: '300', fontSize: 'larger'}}>
+          <Menu.Item header style={{fontFamily: 'Helvetica', fontWeight: '500', fontSize: 'large'}}>
             Midd Rides
           </Menu.Item>
           <Menu.Menu position='right'>
