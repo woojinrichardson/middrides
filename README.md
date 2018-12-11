@@ -1,6 +1,6 @@
 # Midd Rides
 
-Midd Rides is an app for the [Midd Rides](http://www.middlebury.edu/offices/health/publicsafety/services/) evening transportation service at Middlebury College.
+Midd Rides is an app for the [Midd Rides](http://www.middlebury.edu/offices/health/publicsafety/services/MiddRides) evening transportation service at Middlebury College.
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
