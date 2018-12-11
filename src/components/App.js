@@ -24,11 +24,15 @@ class App extends Component {
     firebase.auth.onAuthStateChanged(user => {
       if (user) {
         this.setState({ user });
+
+        // check to see if user is dispatcher
         const db = firebase.firebase.firestore();
         db.collection('users').doc(user.uid).get()
         .then(doc => {
           const isDispatcher = doc.data().role === 'dispatcher';
           if (isDispatcher) {
+
+            // update position of the bus in real time
             if ('geolocation' in navigator) {
               const watchID = navigator.geolocation.watchPosition(
                 position => {
@@ -50,6 +54,7 @@ class App extends Component {
         })
         .catch(error => console.log(error));
 
+        // check for existing request made by user
         db.collection('requests')
         .where('user', '==', user.uid)
         .where('state', '==', 'pending')
@@ -82,8 +87,10 @@ class App extends Component {
   }
 
   handleFormReturn = request => {
-    if (request) {
-      if (this.state.request && !this.state.isDispatcher) {
+    if (request) { // not a cancel
+
+      // dispatcher should not continually update same request when trying to make multiple requests
+      if (this.state.request && !this.state.isDispatcher) { // editing request
         const db = firebase.firebase.firestore();
         db.collection('requests').doc(this.state.request.id).set(
           request,
@@ -93,7 +100,7 @@ class App extends Component {
           const updatedRequest = Object.assign({}, this.state.request, request);
           this.setState({ request: updatedRequest });
         });
-      } else {
+      } else { // new request
         const db = firebase.firebase.firestore();
         db.collection('requests').add(
           request

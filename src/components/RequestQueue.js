@@ -12,6 +12,10 @@ class RequestQueue extends Component {
   }
 
   componentDidMount() {
+    // Cloud Firestore does not support logical OR queries.
+    // Documentation recommends creating a separate query for each OR condition
+    // and merging the query results in the app.
+    // https://firebase.google.com/docs/firestore/query-data/queries
     const db = firebase.firestore();
     db.collection('requests').where('state', '==', 'pending')
     .onSnapshot(querySnapshot => {
@@ -39,7 +43,7 @@ class RequestQueue extends Component {
     const db = firebase.firestore();
     db.collection('requests').doc(id).update({
       state: 'cancelled'
-    })
+    }); // not necessary to update requests in state because of listener
     event.preventDefault();
   }
 
@@ -47,7 +51,7 @@ class RequestQueue extends Component {
     const db = firebase.firestore();
     db.collection('requests').doc(id).update({
       state: 'in progress'
-    })
+    });
     event.preventDefault();
   }
 
@@ -55,7 +59,7 @@ class RequestQueue extends Component {
     const db = firebase.firestore();
     db.collection('requests').doc(id).update({
       state: 'satisfied'
-    })
+    });
     event.preventDefault();
   }
 
