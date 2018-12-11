@@ -147,7 +147,7 @@ class RequestQueue extends Component {
           <Table.Footer>
             <Table.Row>
               <Table.HeaderCell colSpan='5'>
-                <Button floated='left' primary onClick={this.props.addInProgressRrequest}>
+                <Button floated='left' primary onClick={this.props.addInProgressRequest}>
                   Add Request
                 </Button>
               </Table.HeaderCell>

@@ -1,17 +1,12 @@
 import React, { Component } from 'react';
-// import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import { firebase } from '../firebase'
-// import Navigation from './Navigation';
 import SignIn from './SignIn';
 import SignOut from './SignOut';
 import RequestForm from './RequestForm';
 import CancelRequest from './CancelRequest';
 import RequestQueue from './RequestQueue';
-import UserRequest from './UserRequest';
 import MapContainer from './MapContainer';
 import { Button, Grid, Menu, Card } from 'semantic-ui-react';
-
-// import User from './User'
 
 class App extends Component {
   constructor(props) {
@@ -134,13 +129,22 @@ class App extends Component {
     } else if (this.state.user) {
 
       const requestFormButton = (
-        <Button color={this.state.isDispatcher ? 'teal' : 'blue'} fluid style={{marginTop: '20px'}} onClick={() => this.setState({ mode: 'request form' })}>
-          {this.state.isDispatcher ? 'Add Ride' : 'Request Ride'}
+        <Button
+          primary
+          fluid
+          style={{marginTop: '20px'}}
+          onClick={() => this.setState({ mode: 'request form' })}
+        >
+          Request Ride
         </Button>
       );
 
       const editRequestButton = (
-        <Button fluid style={{marginTop: '20px'}} onClick={() => this.setState({ mode: 'request form' })}>
+        <Button
+          fluid
+          style={{marginTop: '20px'}}
+          onClick={() => this.setState({ mode: 'request form' })}
+        >
           Edit Request
         </Button>
       );
@@ -163,7 +167,7 @@ class App extends Component {
                 <Grid.Column width={13}>
                   <RequestQueue
                     addPendingRequest={() => this.setState({ mode: 'request form', initialState: 'pending' })}
-                    addInProgressRrequest={() => this.setState({ mode: 'request form', initialState: 'in progress' })}
+                    addInProgressRequest={() => this.setState({ mode: 'request form', initialState: 'in progress' })}
                   />
                 </Grid.Column>
               </Grid.Row>
