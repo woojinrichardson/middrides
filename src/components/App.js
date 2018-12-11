@@ -9,7 +9,7 @@ import CancelRequest from './CancelRequest';
 import RequestQueue from './RequestQueue';
 import UserRequest from './UserRequest';
 import MapContainer from './MapContainer';
-import { Button, Grid, Menu } from 'semantic-ui-react';
+import { Button, Grid, Menu, Card } from 'semantic-ui-react';
 
 // import User from './User'
 
@@ -186,6 +186,16 @@ class App extends Component {
                 />
               </Grid.Column>
             </Grid>
+            <Card raised style={{position: 'absolute', top: '55px', left: '500px'}}>
+              <Card.Content textAlign='center'>
+                <Card.Description>
+                  <b>{this.state.request.passengers}</b> {this.state.request.passengers > 1 ? 'passengers' : 'passenger'}
+                </Card.Description>
+                <Card.Description>
+                  <b>{this.state.request.pickup}</b> to <b>{this.state.request.dropoff}</b>
+                </Card.Description>
+              </Card.Content>
+            </Card>
           </div>
         );
       } else {
