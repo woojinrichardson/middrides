@@ -21,3 +21,7 @@ You will also see any lint errors in the console.
 In the project directory, run:
 
 ### `npm install`
+
+## Deploying to Firebase Hosting
+
+Follow the instructions in the [Firebase Hosting documentation](https://firebase.google.com/docs/hosting/deploying).
