@@ -6,12 +6,12 @@ class CancelRequestButton extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false,
+      modalOpen: false,
       error: '',
     }
   }
 
-  show = () => this.setState({ open: true })
+  show = () => this.setState({ modalOpen: true })
 
   handleConfirm = () => {
     const db = firebase.firestore();
@@ -25,10 +25,10 @@ class CancelRequestButton extends Component {
       this.setState({ error });
     });
     this.props.complete();
-    this.setState({ open: false });
+    this.setState({ modalOpen: false });
   }
 
-  handleCancel = () => this.setState({ open: false })
+  handleCancel = () => this.setState({ modalOpen: false })
 
   render() {
     const {
@@ -39,7 +39,7 @@ class CancelRequestButton extends Component {
       <div>
         <Button fluid negative style={{marginTop: '20px'}} onClick={this.show}>Cancel Request</Button>
         <Confirm
-          open={this.state.open}
+          open={this.state.modalOpen}
           content='Are you sure you want to cancel this request?'
           onCancel={this.handleCancel}
           onConfirm={this.handleConfirm}
