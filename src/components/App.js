@@ -58,16 +58,24 @@ class App extends Component {
         db.collection('requests')
         .where('user', '==', user.uid)
         .where('state', '==', 'pending')
-        .get()
-        .then(querySnapshot => {
+        .onSnapshot(querySnapshot => { // changed from one time query to listener
+          // probably need to change how updating of request is done in handleFormReturn() now that using listener
           if (!querySnapshot.empty) {
             const request = querySnapshot.docs[0].data();
             Object.assign(request, {id: querySnapshot.docs[0].id});
             this.setState({ request });
+          } else {
+            // necessary for user to be notified that request was changed by dispatcher
+            // add message (distinguish between satisfied and cancelled?)
+            this.setState({ request: null });
           }
         })
         .catch(error => console.log(error));
 
+        // should I use a timestamp to get the most recent request instead of looking for either pending or in progress?
+        // if it's pending or in progress, set it as request; if not, set request to null
+
+        // will probably need to keep pendingRequest and inProgressRequest in state instead of just request for similar reason as in RequestQueue
         db.collection('requests')
         .where('user', '==', user.uid)
         .where('state', '==', 'in progress')

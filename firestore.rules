@@ -1,0 +1,31 @@
+service cloud.firestore {
+  match /databases/{database}/documents {
+  	function isSignedIn() {
+      return request.auth.uid != null;
+    }
+    
+    function belongsToUser() {
+    	return request.auth.uid == resource.data.user;
+    }
+    
+    function isDispatcher() {
+    	return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'dispatcher';
+    }
+  	
+    match /requests/{req} {
+    	allow get, list: if belongsToUser() || isDispatcher();
+      allow create: if isSignedIn();
+      allow update, delete: if belongsToUser() || isDispatcher();
+    }
+    
+    match /users/{user} {
+    	allow read: if isSignedIn();
+      allow write: if isDispatcher();
+    }
+    
+    match /vehicles/{vehicle} {
+    	allow read: if true;
+      allow write: if isDispatcher();
+    }
+  }
+}
