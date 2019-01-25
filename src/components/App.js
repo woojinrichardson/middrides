@@ -56,37 +56,20 @@ class App extends Component {
 
         // check for existing request made by user
         db.collection('requests')
-        .where('user', '==', user.uid)
-        .where('state', '==', 'pending')
-        .onSnapshot(querySnapshot => { // changed from one time query to listener
-          // probably need to change how updating of request is done in handleFormReturn() now that using listener
-          if (!querySnapshot.empty) {
-            const request = querySnapshot.docs[0].data();
-            Object.assign(request, {id: querySnapshot.docs[0].id});
-            this.setState({ request });
-          } else {
-            // necessary for user to be notified that request was changed by dispatcher
-            // add message (distinguish between satisfied and cancelled?)
-            this.setState({ request: null });
-          }
-        });
-
-        // should I use a timestamp to get the most recent request instead of looking for either pending or in progress?
-        // if it's pending or in progress, set it as request; if not, set request to null
-
-        // will probably need to keep pendingRequest and inProgressRequest in state instead of just request for similar reason as in RequestQueue
-        db.collection('requests')
-        .where('user', '==', user.uid)
-        .where('state', '==', 'in progress')
-        .onSnapshot(querySnapshot => {
-          if (!querySnapshot.empty) {
-            const request = querySnapshot.docs[0].data();
-            Object.assign(request, {id: querySnapshot.docs[0].id});
-            this.setState({ request });
-          } else {
-            this.setState({ request: null });
-          }
-        });
+          .where('user', '==', user.uid)
+          .orderBy('timestamp', 'desc')
+          .limit(1)
+          .onSnapshot(querySnapshot => {
+            if (!querySnapshot.empty) {
+              const request = querySnapshot.docs[0].data();
+              if (request.state === 'pending' || request.state === 'in progress') {
+                Object.assign(request, {id: querySnapshot.docs[0].id});
+                this.setState({ request });
+              } else {
+                this.setState({ request: null });
+              }
+            }
+          });
       }
     });
   }
@@ -100,20 +83,20 @@ class App extends Component {
         db.collection('requests').doc(this.state.request.id).set(
           request,
           { merge: true }
-        )
-        .then(() => {
-          const updatedRequest = Object.assign({}, this.state.request, request);
-          this.setState({ request: updatedRequest });
-        });
+        );
+        // .then(() => {
+        //   const updatedRequest = Object.assign({}, this.state.request, request);
+        //   this.setState({ request: updatedRequest });
+        // });
       } else { // new request
         const db = firebase.firebase.firestore();
         db.collection('requests').add(
           request
-        )
-        .then(documentReference => {
-          Object.assign(request, {id: documentReference.id });
-          this.setState({ request });
-        });
+        );
+        // .then(documentReference => {
+        //   Object.assign(request, {id: documentReference.id });
+        //   this.setState({ request });
+        // });
       }
     }
     this.setState({ mode: 'view' });
