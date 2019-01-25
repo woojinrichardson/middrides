@@ -56,59 +56,38 @@ class App extends Component {
 
         // check for existing request made by user
         db.collection('requests')
-        .where('user', '==', user.uid)
-        .where('state', '==', 'pending')
-        .get()
-        .then(querySnapshot => {
-          if (!querySnapshot.empty) {
-            const request = querySnapshot.docs[0].data();
-            Object.assign(request, {id: querySnapshot.docs[0].id});
-            this.setState({ request });
-          }
-        })
-        .catch(error => console.log(error));
-
-        db.collection('requests')
-        .where('user', '==', user.uid)
-        .where('state', '==', 'in progress')
-        .get()
-        .then(querySnapshot => {
-          if (!querySnapshot.empty) {
-            const request = querySnapshot.docs[0].data();
-            Object.assign(request, {id: querySnapshot.docs[0].id});
-            this.setState({ request });
-          }
-        })
-        .catch(error => console.log(error));
-      } else {
-        this.setState({ user: null });
+          .where('user', '==', user.uid)
+          .orderBy('timestamp', 'desc')
+          .limit(1)
+          .onSnapshot(querySnapshot => {
+            if (!querySnapshot.empty) {
+              const request = querySnapshot.docs[0].data();
+              if (request.state === 'pending' || request.state === 'in progress') {
+                Object.assign(request, {id: querySnapshot.docs[0].id});
+                this.setState({ request });
+              } else {
+                this.setState({ request: null });
+              }
+            }
+          });
       }
     });
   }
 
   handleFormReturn = request => {
     if (request) { // not a cancel
-
       // dispatcher should not continually update same request when trying to make multiple requests
       if (this.state.request && !this.state.isDispatcher) { // editing request
         const db = firebase.firebase.firestore();
         db.collection('requests').doc(this.state.request.id).set(
           request,
           { merge: true }
-        )
-        .then(() => {
-          const updatedRequest = Object.assign({}, this.state.request, request);
-          this.setState({ request: updatedRequest });
-        });
+        );
       } else { // new request
         const db = firebase.firebase.firestore();
         db.collection('requests').add(
           request
-        )
-        .then(documentReference => {
-          Object.assign(request, {id: documentReference.id });
-          this.setState({ request });
-        });
+        );
       }
     }
     this.setState({ mode: 'view' });
@@ -154,7 +133,7 @@ class App extends Component {
         >
           Edit Request
         </Button>
-      );
+      )
 
       if (this.state.mode === 'request form') {
         return (
@@ -193,7 +172,6 @@ class App extends Component {
               <Grid.Column width={3}>
                 <CancelRequest
                   id={this.state.request.id}
-                  complete={() => this.setState({ request: null })}
                 />
               </Grid.Column>
             </Grid>
