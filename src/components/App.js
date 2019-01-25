@@ -76,7 +76,6 @@ class App extends Component {
 
   handleFormReturn = request => {
     if (request) { // not a cancel
-
       // dispatcher should not continually update same request when trying to make multiple requests
       if (this.state.request && !this.state.isDispatcher) { // editing request
         const db = firebase.firebase.firestore();
@@ -84,19 +83,11 @@ class App extends Component {
           request,
           { merge: true }
         );
-        // .then(() => {
-        //   const updatedRequest = Object.assign({}, this.state.request, request);
-        //   this.setState({ request: updatedRequest });
-        // });
       } else { // new request
         const db = firebase.firebase.firestore();
         db.collection('requests').add(
           request
         );
-        // .then(documentReference => {
-        //   Object.assign(request, {id: documentReference.id });
-        //   this.setState({ request });
-        // });
       }
     }
     this.setState({ mode: 'view' });
@@ -181,7 +172,6 @@ class App extends Component {
               <Grid.Column width={3}>
                 <CancelRequest
                   id={this.state.request.id}
-                  complete={() => this.setState({ request: null })}
                 />
               </Grid.Column>
             </Grid>

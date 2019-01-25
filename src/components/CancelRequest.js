@@ -24,7 +24,6 @@ class CancelRequestButton extends Component {
     .catch(error => {
       this.setState({ error });
     });
-    this.props.complete();
     this.setState({ modalOpen: false });
   }
 
