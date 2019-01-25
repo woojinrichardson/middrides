@@ -69,8 +69,7 @@ class App extends Component {
             // add message (distinguish between satisfied and cancelled?)
             this.setState({ request: null });
           }
-        })
-        .catch(error => console.log(error));
+        });
 
         // should I use a timestamp to get the most recent request instead of looking for either pending or in progress?
         // if it's pending or in progress, set it as request; if not, set request to null
@@ -79,17 +78,15 @@ class App extends Component {
         db.collection('requests')
         .where('user', '==', user.uid)
         .where('state', '==', 'in progress')
-        .get()
-        .then(querySnapshot => {
+        .onSnapshot(querySnapshot => {
           if (!querySnapshot.empty) {
             const request = querySnapshot.docs[0].data();
             Object.assign(request, {id: querySnapshot.docs[0].id});
             this.setState({ request });
+          } else {
+            this.setState({ request: null });
           }
-        })
-        .catch(error => console.log(error));
-      } else {
-        this.setState({ user: null });
+        });
       }
     });
   }
@@ -162,7 +159,7 @@ class App extends Component {
         >
           Edit Request
         </Button>
-      );
+      )
 
       if (this.state.mode === 'request form') {
         return (

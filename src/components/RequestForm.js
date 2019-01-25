@@ -63,6 +63,7 @@ class RequestForm extends Component {
       dropoff: this.state.dropoff,
       user: this.props.user,
       state: this.props.initialState,
+      timestamp: new Date(),
     };
     this.props.complete(request);
   }
