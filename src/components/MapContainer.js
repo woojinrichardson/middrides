@@ -19,8 +19,10 @@ const containerStyle = {
 };
 
 const initialCenter = {
-  lat: 44.0153,
-  lng: -73.1673
+  // lat: 44.0153,
+  // lng: -73.1673
+  lat: 42.520058,
+  lng: -76.511501
 }
 
 export class MapContainer extends Component {
