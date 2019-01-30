@@ -6,7 +6,7 @@ import RequestForm from './RequestForm';
 import CancelRequest from './CancelRequest';
 import RequestQueue from './RequestQueue';
 import MapContainer from './MapContainer';
-import { Button, Grid, Menu, Card } from 'semantic-ui-react';
+import { Button, Header, Grid, Menu, Card } from 'semantic-ui-react';
 
 class App extends Component {
   constructor(props) {
@@ -22,12 +22,19 @@ class App extends Component {
   }
 
   componentDidMount() {
+    // check to see if Midd Rides is operating
+    const db = firebase.firebase.firestore();
+    db.settings({
+      timestampsInSnapshots: true
+    })
+    db.collection('vehicles').doc('bus')
+      .onSnapshot(doc => this.setState({ isOperating: doc.data().isOperating }))
+
     firebase.auth.onAuthStateChanged(user => {
       if (user) {
         this.setState({ user });
 
         // check to see if user is dispatcher
-        const db = firebase.firebase.firestore();
         db.collection('users').doc(user.uid).get()
         .then(doc => {
           const isDispatcher = doc.data().role === 'dispatcher';
@@ -59,10 +66,6 @@ class App extends Component {
           this.setState({ isDispatcher });
         })
         .catch(error => console.log(error));
-
-        // check to see if Midd Rides is operating
-        db.collection('vehicles').doc('bus')
-          .onSnapshot(doc => this.setState({ isOperating: doc.data().isOperating })
 
         // check for existing request made by user
         db.collection('requests')
@@ -106,6 +109,7 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.state.isOperating);
     const menu = (
       <Menu fixed='top' inverted style={{height: '60px'}}>
         <Menu.Item header style={{fontFamily: 'Helvetica', fontWeight: '500', fontSize: 'large'}}>
@@ -117,7 +121,22 @@ class App extends Component {
       </Menu>
     );
 
-    if (!this.state.user) {
+    if (!this.state.isOperating) {
+      if (this.state.isDispatcher) {
+        return (
+          <div>
+            {menu}
+          </div>
+        );
+      } else {
+        return (
+          <div>
+            {menu}
+            <Header as='h1' textAlign='center' style={{marginTop: '200px'}}>Midd Rides is not running now.</Header>
+          </div>
+        );
+      }
+    } else if (!this.state.user) {
       return (
         <div>
           {menu}
