@@ -54,6 +54,7 @@ export class MapContainer extends Component {
         style={style}
         initialCenter={initialCenter}
         zoom={16}
+        gestureHandling='none'
         disableDefaultUI={true}
         containerStyle={containerStyle}
       >
