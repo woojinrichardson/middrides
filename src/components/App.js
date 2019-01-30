@@ -75,6 +75,8 @@ class App extends Component {
               }
             }
           });
+      } else {
+        this.setState({ user: null })
       }
     });
   }
