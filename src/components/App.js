@@ -44,6 +44,11 @@ class App extends Component {
                 },
                 error => {
                   alert('ERROR(' + error.code + '): ' + error.message);
+                },
+                {
+                  enableHighAccuracy: true,
+                  timeout: Infinity,
+                  maximumAge: 0,
                 }
               );
             } else {
