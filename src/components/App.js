@@ -17,6 +17,7 @@ class App extends Component {
       isDispatcher: false,
       mode: 'view',
       initialState: 'pending',
+      isOperating: false,
     };
   }
 
@@ -58,6 +59,10 @@ class App extends Component {
           this.setState({ isDispatcher });
         })
         .catch(error => console.log(error));
+
+        // check to see if Midd Rides is operating
+        db.collection('vehicles').doc('bus')
+          .onSnapshot(doc => this.setState({ isOperating: doc.data().isOperating })
 
         // check for existing request made by user
         db.collection('requests')
