@@ -17,26 +17,31 @@ class RequestQueue extends Component {
     // and merging the query results in the app.
     // https://firebase.google.com/docs/firestore/query-data/queries
     const db = firebase.firestore();
-    db.collection('requests').where('state', '==', 'pending')
-    .onSnapshot(querySnapshot => {
-      const pendingRequests = [];
-      querySnapshot.forEach(doc => {
-        pendingRequests.push(
-          Object.assign({}, { id: doc.id }, doc.data())
-        );
-      })
-      this.setState({ pendingRequests });
-    });
-    db.collection('requests').where('state', '==', 'in progress')
-    .onSnapshot(querySnapshot => {
-      const inProgressRequests = [];
-      querySnapshot.forEach(doc => {
-        inProgressRequests.push(
-          Object.assign({}, { id: doc.id }, doc.data())
-        );
-      })
-      this.setState({ inProgressRequests });
-    });
+    db.collection('requests')
+      .where('state', '==', 'pending')
+      .orderBy('timestamp')
+      .onSnapshot(querySnapshot => {
+        const pendingRequests = [];
+        querySnapshot.forEach(doc => {
+          pendingRequests.push(
+            Object.assign({}, { id: doc.id }, doc.data())
+          );
+        })
+        this.setState({ pendingRequests });
+      });
+
+    db.collection('requests')
+      .where('state', '==', 'in progress')
+      .orderBy('timestamp')
+      .onSnapshot(querySnapshot => {
+        const inProgressRequests = [];
+        querySnapshot.forEach(doc => {
+          inProgressRequests.push(
+            Object.assign({}, { id: doc.id }, doc.data())
+          );
+        })
+        this.setState({ inProgressRequests });
+      });
   }
 
   cancelRequest = (event, id) => {
