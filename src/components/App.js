@@ -6,7 +6,7 @@ import RequestForm from './RequestForm';
 import CancelRequest from './CancelRequest';
 import RequestQueue from './RequestQueue';
 import MapContainer from './MapContainer';
-import { Button, Header, Grid, Menu, Card } from 'semantic-ui-react';
+import { Button, Header, Segment, Grid, Menu, Card } from 'semantic-ui-react';
 
 class App extends Component {
   constructor(props) {
@@ -117,17 +117,9 @@ class App extends Component {
     this.setState({ mode: 'view' });
   }
 
-  // handleStartService = () => {
-  //   const db = firebase.firebase.firestore()
-  //   db.collection('vehicles').doc('bus').update({
-  //     isOperating: true
-  //   })
-  //   .catch(error => console.log('Error updating document: ', error));
-  // }
-
   render() {
     const menu = (
-      <Menu fixed='top' inverted style={{height: '60px'}}>
+      <Menu inverted attached style={{height: '60px'}}>
         <Menu.Item header style={{fontFamily: 'Helvetica', fontWeight: '500', fontSize: 'large'}}>
           Midd Rides
         </Menu.Item>
@@ -137,11 +129,18 @@ class App extends Component {
       </Menu>
     );
 
+    const footer = (
+      <Segment inverted attached='bottom' style={{ padding: '5em 0em' }}>
+        <p style={{marginLeft: '20px'}}>&copy; 2019 Midd Rides</p>
+      </Segment>
+    );
+
     if (!this.state.isOperating) {
       return (
         <div>
           {menu}
           <Header as='h1' textAlign='center' style={{marginTop: '200px'}}>Midd Rides is not running now.</Header>
+          {footer}
         </div>
       );
     } else if (!this.state.user) {
@@ -149,6 +148,7 @@ class App extends Component {
         <div>
           {menu}
           <MapContainer />
+          {footer}
         </div>
       );
     } else if (this.state.user) {
@@ -157,7 +157,7 @@ class App extends Component {
         <Button
           primary
           fluid
-          style={{marginTop: '20px'}}
+          style={{marginTop: '20px', marginBottom: '20px'}}
           onClick={() => this.setState({ mode: 'request form' })}
         >
           Request Ride
@@ -167,7 +167,7 @@ class App extends Component {
       const editRequestButton = (
         <Button
           fluid
-          style={{marginTop: '20px'}}
+          style={{marginTop: '20px', marginBottom: '20px'}}
           onClick={() => this.setState({ mode: 'request form' })}
         >
           Edit Request
@@ -176,12 +176,16 @@ class App extends Component {
 
       if (this.state.mode === 'request form') {
         return (
-          <RequestForm
-            user={this.state.user.uid}
-            request={this.state.isDispatcher ? null : this.state.request}
-            complete={request => this.handleFormReturn(request)}
-            initialState={this.state.initialState}
-          />
+          <div>
+            {menu}
+            <RequestForm
+              user={this.state.user.uid}
+              request={this.state.isDispatcher ? null : this.state.request}
+              complete={request => this.handleFormReturn(request)}
+              initialState={this.state.initialState}
+            />
+            {footer}
+          </div>
         );
       } else if (this.state.isDispatcher) {
         return (
@@ -197,6 +201,7 @@ class App extends Component {
                 </Grid.Column>
               </Grid.Row>
             </Grid>
+            {footer}
           </div>
         );
       } else if (this.state.request) {
@@ -224,6 +229,7 @@ class App extends Component {
                 </Card.Description>
               </Card.Content>
             </Card>
+            {footer}
           </div>
         );
       } else {
@@ -236,6 +242,7 @@ class App extends Component {
                 {requestFormButton}
               </Grid.Column>
             </Grid>
+            {footer}
           </div>
         );
       }
