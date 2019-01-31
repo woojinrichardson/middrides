@@ -40,6 +40,12 @@ class App extends Component {
           const isDispatcher = doc.data().role === 'dispatcher';
           if (isDispatcher) {
 
+            // "begin" Midd Rides service
+            db.collection('vehicles').doc('bus').update({
+              isOperating: true
+            })
+            .catch(error => console.log('Error updating document: ', error));
+
             // update position of the bus in real time
             if ('geolocation' in navigator) {
               const watchID = navigator.geolocation.watchPosition(
@@ -84,6 +90,9 @@ class App extends Component {
             }
           });
       } else {
+        if (this.state.isDispatcher) {
+          this.setState({ isDispatcher: false })
+        }
         this.setState({ user: null })
       }
     });
@@ -108,34 +117,33 @@ class App extends Component {
     this.setState({ mode: 'view' });
   }
 
+  // handleStartService = () => {
+  //   const db = firebase.firebase.firestore()
+  //   db.collection('vehicles').doc('bus').update({
+  //     isOperating: true
+  //   })
+  //   .catch(error => console.log('Error updating document: ', error));
+  // }
+
   render() {
-    console.log(this.state.isOperating);
     const menu = (
       <Menu fixed='top' inverted style={{height: '60px'}}>
         <Menu.Item header style={{fontFamily: 'Helvetica', fontWeight: '500', fontSize: 'large'}}>
           Midd Rides
         </Menu.Item>
         <Menu.Menu position='right'>
-          {this.state.user ? <SignOut /> : <SignIn />}
+          {this.state.user ? <SignOut isDispatcher={this.state.isDispatcher} /> : <SignIn />}
         </Menu.Menu>
       </Menu>
     );
 
     if (!this.state.isOperating) {
-      if (this.state.isDispatcher) {
-        return (
-          <div>
-            {menu}
-          </div>
-        );
-      } else {
-        return (
-          <div>
-            {menu}
-            <Header as='h1' textAlign='center' style={{marginTop: '200px'}}>Midd Rides is not running now.</Header>
-          </div>
-        );
-      }
+      return (
+        <div>
+          {menu}
+          <Header as='h1' textAlign='center' style={{marginTop: '200px'}}>Midd Rides is not running now.</Header>
+        </div>
+      );
     } else if (!this.state.user) {
       return (
         <div>
