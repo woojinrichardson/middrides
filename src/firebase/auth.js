@@ -8,7 +8,7 @@ provider.setCustomParameters({
 })
 
 export const signIn = () =>
-  auth.signInWithPopup(provider);
+  auth.signInWithRedirect(provider);
 
 // Sign out
 export const signOut = () =>
