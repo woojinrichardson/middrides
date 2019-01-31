@@ -87,7 +87,8 @@ class RequestQueue extends Component {
                 <Table.Cell>{request.dropoff}</Table.Cell>
                 <Table.Cell textAlign='center'>
                   <Button primary onClick={event => this.makeInProgress(event, request.id)}>Pick Up</Button>
-                  <Button onClick={event => this.cancelRequest(event, request.id)}>Cancel Request</Button>
+                  <Button basic onClick={event => this.props.editRequest(request)}>Edit</Button>
+                  <Button onClick={event => this.cancelRequest(event, request.id)}>Cancel</Button>
                 </Table.Cell>
               </Table.Row>
             ))}
@@ -125,7 +126,8 @@ class RequestQueue extends Component {
                 <Table.Cell>{request.dropoff}</Table.Cell>
                 <Table.Cell textAlign='center'>
                   <Button primary onClick={event => this.makeSatisfied(event, request.id)}>Drop Off</Button>
-                  <Button onClick={event => this.cancelRequest(event, request.id)}>Cancel Request</Button>
+                  <Button basic onClick={event => this.props.editRequest(request)}>Edit</Button>
+                  <Button onClick={event => this.cancelRequest(event, request.id)}>Cancel</Button>
                 </Table.Cell>
               </Table.Row>
             ))}

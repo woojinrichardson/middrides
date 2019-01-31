@@ -100,8 +100,7 @@ class App extends Component {
 
   handleFormReturn = request => {
     if (request) { // not a cancel
-      // dispatcher should not continually update same request when trying to make multiple requests
-      if (this.state.request && !this.state.isDispatcher) { // editing request
+      if (this.state.request) { // editing request
         const db = firebase.firebase.firestore();
         db.collection('requests').doc(this.state.request.id).set(
           request,
@@ -180,7 +179,7 @@ class App extends Component {
             {menu}
             <RequestForm
               user={this.state.user.uid}
-              request={this.state.isDispatcher ? null : this.state.request}
+              request={this.state.request}
               complete={request => this.handleFormReturn(request)}
               initialState={this.state.initialState}
             />
@@ -195,8 +194,9 @@ class App extends Component {
               <Grid.Row>
                 <Grid.Column width={13}>
                   <RequestQueue
-                    addPendingRequest={() => this.setState({ mode: 'request form', initialState: 'pending' })}
-                    addInProgressRequest={() => this.setState({ mode: 'request form', initialState: 'in progress' })}
+                    addPendingRequest={() => this.setState({ request: null, mode: 'request form', initialState: 'pending' })}
+                    addInProgressRequest={() => this.setState({ request: null, mode: 'request form', initialState: 'in progress' })}
+                    editRequest={request => this.setState({ request, mode: 'request form', initialState: request.state })}
                   />
                 </Grid.Column>
               </Grid.Row>
