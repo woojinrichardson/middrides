@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { firebase } from '../firebase/firebase';
-import { Button, Header, Table } from 'semantic-ui-react';
+import { Button, Header, Table, Confirm } from 'semantic-ui-react';
 
 class RequestQueue extends Component {
   constructor(props) {
@@ -8,6 +8,8 @@ class RequestQueue extends Component {
     this.state = {
       pendingRequests: [],
       inProgressRequests: [],
+      modalOpen: false,
+      requestToCancel: null,
     };
   }
 
@@ -44,13 +46,7 @@ class RequestQueue extends Component {
       });
   }
 
-  cancelRequest = (event, id) => {
-    const db = firebase.firestore();
-    db.collection('requests').doc(id).update({
-      state: 'cancelled'
-    }); // not necessary to update requests in state because of listener
-    event.preventDefault();
-  }
+  cancelRequest = request => this.setState({ modalOpen: true, requestToCancel: request })
 
   makeInProgress = (event, id) => {
     const db = firebase.firestore();
@@ -67,6 +63,16 @@ class RequestQueue extends Component {
     });
     event.preventDefault();
   }
+
+  handleConfirm = () => {
+    const db = firebase.firestore();
+    db.collection('requests').doc(this.state.requestToCancel.id).update({
+      state: 'cancelled'
+    });
+    this.setState({ modalOpen: false });
+  }
+
+  handleCancel = () => this.setState({ modalOpen: false })
 
   render() {
     return (
@@ -93,7 +99,7 @@ class RequestQueue extends Component {
                 <Table.Cell textAlign='center'>
                   <Button primary onClick={event => this.makeInProgress(event, request.id)}>Pick Up</Button>
                   <Button basic onClick={event => this.props.editRequest(request)}>Edit</Button>
-                  <Button onClick={event => this.cancelRequest(event, request.id)}>Cancel</Button>
+                  <Button onClick={event => this.cancelRequest(request)}>Cancel</Button>
                 </Table.Cell>
               </Table.Row>
             ))}
@@ -132,7 +138,7 @@ class RequestQueue extends Component {
                 <Table.Cell textAlign='center'>
                   <Button primary onClick={event => this.makeSatisfied(event, request.id)}>Drop Off</Button>
                   <Button basic onClick={event => this.props.editRequest(request)}>Edit</Button>
-                  <Button onClick={event => this.cancelRequest(event, request.id)}>Cancel</Button>
+                  <Button onClick={event => this.cancelRequest(request)}>Cancel</Button>
                 </Table.Cell>
               </Table.Row>
             ))}
@@ -148,6 +154,12 @@ class RequestQueue extends Component {
             </Table.Row>
           </Table.Footer>
         </Table>
+        <Confirm
+          open={this.state.modalOpen}
+          content='Are you sure you want to cancel this request?'
+          onCancel={this.handleCancel}
+          onConfirm={this.handleConfirm}
+        />
       </div>
     );
   }
