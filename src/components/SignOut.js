@@ -8,13 +8,13 @@ class SignOutButton extends Component {
   }
 
   handleSignOut = () => {
-    if (this.props.isDispatcher) {
-      const db = firebase.firebase.firestore();
-      db.collection('vehicles').doc('bus').update({
-        isOperating: false
-      })
-      .catch(error => console.log('Error updating document: ', error));
-    }
+    // if (this.props.isDispatcher) {
+    //   const db = firebase.firebase.firestore();
+    //   db.collection('vehicles').doc('bus').update({
+    //     isOperating: false
+    //   })
+    //   .catch(error => console.log('Error updating document: ', error));
+    // }
     auth.signOut();
   }
 

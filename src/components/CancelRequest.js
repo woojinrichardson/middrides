@@ -36,7 +36,7 @@ class CancelRequestButton extends Component {
 
     return (
       <div>
-        <Button fluid negative style={{marginTop: '20px', marginBottom: '20px'}} onClick={this.show}>Cancel Request</Button>
+        <Button negative style={{marginTop: '20px'}} onClick={this.show}>Cancel Request</Button>
         <Confirm
           open={this.state.modalOpen}
           content='Are you sure you want to cancel this request?'

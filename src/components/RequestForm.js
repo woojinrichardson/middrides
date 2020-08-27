@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { firebase } from '../firebase/firebase';
-import { Segment, Form, Grid } from 'semantic-ui-react';
+import { Header, Segment, Form, Grid } from 'semantic-ui-react';
 
 const numbers = [
   { text: '1', value: '1' },
@@ -29,6 +29,7 @@ const locations = [
   { text: 'Robert A. Jones \'59 House', value: 'Robert A. Jones \'59 House' },
   { text: 'McCullough Student Center', value: 'McCullough Student Center' },
   { text: 'Frog Hollow', value: 'Frog Hollow' },
+  { text: '51 Main St', value: '51 Main St' },
 ];
 
 class RequestForm extends Component {
@@ -79,51 +80,43 @@ class RequestForm extends Component {
 
   render() {
     return (
-      <Grid centered verticalAlign='middle' style={{minHeight: '100vh'}}>
-        <Grid.Row>
-          <Grid.Column width={10}>
-            <Segment>
-              <Form onSubmit={this.handleSubmit}>
-                <Form.Input
-                  label='Name'
-                  placeholder='Name'
-                  name='name'
-                  value={this.state.name}
-                  onChange={this.handleInput}
-                />
-                <Form.Select
-                  label='Number of Passengers'
-                  placeholder='0'
-                  name='passengers'
-                  options={numbers}
-                  value={this.state.passengers}
-                  onChange={this.handleInput}
-                />
-                <Form.Select
-                  label='Pickup Location'
-                  placeholder='Select Pickup Location'
-                  name='pickup'
-                  options={locations}
-                  value={this.state.pickup}
-                  onChange={this.handleInput}
-                />
-                <Form.Select
-                  label='Dropoff Location'
-                  placeholder='Select Dropoff Location'
-                  name='dropoff'
-                  options={locations}
-                  value={this.state.dropoff}
-                  onChange={this.handleInput}
-                />
-                <Form.Group inline>
-                  <Form.Button primary disabled={this.isDisabled()}>Submit</Form.Button>
-                  <Form.Button onClick={this.handleCancel}>Cancel</Form.Button>
-                </Form.Group>
-              </Form>
-            </Segment>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+      <Form onSubmit={this.handleSubmit}>
+        <Form.Input
+          label='Name'
+          placeholder='Name'
+          name='name'
+          value={this.state.name}
+          onChange={this.handleInput}
+        />
+        <Form.Select
+          label='Number of Passengers'
+          placeholder='0'
+          name='passengers'
+          options={numbers}
+          value={this.state.passengers}
+          onChange={this.handleInput}
+        />
+        <Form.Select
+          label='Pickup Location'
+          placeholder='Select Pickup Location'
+          name='pickup'
+          options={locations}
+          value={this.state.pickup}
+          onChange={this.handleInput}
+        />
+        <Form.Select
+          label='Dropoff Location'
+          placeholder='Select Dropoff Location'
+          name='dropoff'
+          options={locations}
+          value={this.state.dropoff}
+          onChange={this.handleInput}
+        />
+        <Form.Group inline>
+          <Form.Button primary disabled={this.isDisabled()}>Submit</Form.Button>
+          <Form.Button onClick={this.handleCancel}>Cancel</Form.Button>
+        </Form.Group>
+      </Form>
     );
   }
 }

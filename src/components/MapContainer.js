@@ -3,26 +3,18 @@ import { firebase } from '../firebase/firebase';
 import { Map, Marker, GoogleApiWrapper } from 'google-maps-react';
 
 const style = {
-  width: '100%',
-  height: '100%',
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  marginRight: '-50%',
-  transform: 'translate(-50%, -50%)',
+
 };
 
 const containerStyle = {
-  width: '1280px',
-  height: '570px',
-  position: 'relative',
+
 };
 
 const initialCenter = {
-  lat: 44.009965,
-  lng: -73.177956
-  // lat: 42.520058,
-  // lng: -76.511501
+  // lat: 44.009965,
+  // lng: -73.177956
+  lat: 42.520058,
+  lng: -76.511501
 }
 
 
@@ -48,11 +40,11 @@ export class MapContainer extends Component {
     return (
       <Map
         google={this.props.google}
-        style={style}
         initialCenter={initialCenter}
         zoom={16}
         gestureHandling='none'
         disableDefaultUI={true}
+        style={style}
         containerStyle={containerStyle}
       >
         <Marker

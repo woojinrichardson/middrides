@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { firebase } from '../firebase/firebase';
-import { Button, Header, Table, Confirm } from 'semantic-ui-react';
+import { Container, Button, Header, Table, Confirm } from 'semantic-ui-react';
 
 class RequestQueue extends Component {
   constructor(props) {
@@ -76,8 +76,8 @@ class RequestQueue extends Component {
 
   render() {
     return (
-      <div>
-        <Header style={{marginTop: '40px'}}>Pending</Header>
+      <Container>
+        <Header>Pending</Header>
         <Table celled>
           <Table.Header>
             <Table.Row>
@@ -107,8 +107,8 @@ class RequestQueue extends Component {
 
           <Table.Footer>
             <Table.Row>
-              <Table.HeaderCell colSpan='5'>
-                <Button floated='left' primary onClick={this.props.addPendingRequest}>
+              <Table.HeaderCell colSpan='5' textAlign='left'>
+                <Button primary onClick={this.props.addPendingRequest}>
                   Add Request
                 </Button>
               </Table.HeaderCell>
@@ -146,21 +146,22 @@ class RequestQueue extends Component {
 
           <Table.Footer>
             <Table.Row>
-              <Table.HeaderCell colSpan='5'>
-                <Button floated='left' primary onClick={this.props.addInProgressRequest}>
+              <Table.HeaderCell colSpan='5' textAlign='left'>
+                <Button primary onClick={this.props.addInProgressRequest}>
                   Add Request
                 </Button>
               </Table.HeaderCell>
             </Table.Row>
           </Table.Footer>
         </Table>
+
         <Confirm
           open={this.state.modalOpen}
           content='Are you sure you want to cancel this request?'
           onCancel={this.handleCancel}
           onConfirm={this.handleConfirm}
         />
-      </div>
+      </Container>
     );
   }
 }
