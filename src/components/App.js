@@ -157,22 +157,26 @@ class App extends Component {
       </Menu>
     );
 
+    const notOperating = (
+      <div style={{flex: '2', display: 'flex', flexFlow: 'column', justifyContent: 'center', alignItems: 'center', backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url(https://res.cloudinary.com/dpktscic3/image/upload/v1549926294/green-mountains-istock-OGphoto.jpg)', backgroundPosition: 'center center', backgroundRepeat: 'no repeat', backgroundAttachment: 'fixed', backgroundSize: 'cover'}}>
+        <Header as='h1' textAlign='center' style={{color: 'white', fontFamily: 'Roboto, sans-serif', fontSize: '3.5em', fontWeight: 'bold'}}>Midd Rides is not running now.</Header>
+        <Button
+          inverted
+          size='massive'
+          href='http://www.middlebury.edu/offices/health/publicsafety/services-we-offer/MiddRides'
+          target='_blank'
+        >
+          See Bus Schedule
+        </Button>
+      </div>
+    );
+
     if (!this.state.user) {
       if (!this.state.isOperating) {
         return (
           <div style={{display: 'flex', flexFlow: 'column', height: '100vh', width: '100vw'}}>
             {menu}
-            <div style={{flex: '2', display: 'flex', flexFlow: 'column', justifyContent: 'center', alignItems: 'center', backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url(https://res.cloudinary.com/dpktscic3/image/upload/v1549926294/green-mountains-istock-OGphoto.jpg)', backgroundPosition: 'center center', backgroundRepeat: 'no repeat', backgroundAttachment: 'fixed', backgroundSize: 'cover'}}>
-              <Header as='h1' textAlign='center' style={{color: 'white', fontFamily: 'Roboto, sans-serif', fontSize: '3.5em', fontWeight: 'bold'}}>Midd Rides is not running now.</Header>
-              <Button
-                inverted
-                size='massive'
-                href='http://www.middlebury.edu/offices/health/publicsafety/services-we-offer/MiddRides'
-                target='_blank'
-              >
-                See Bus Schedule
-              </Button>
-            </div>
+            {notOperating}
           </div>
         );
       } else {
@@ -230,17 +234,7 @@ class App extends Component {
         return (
           <div style={{display: 'flex', flexFlow: 'column', height: '100vh', width: '100vw'}}>
             {menu}
-            <div style={{flex: '2', display: 'flex', flexFlow: 'column', justifyContent: 'center', alignItems: 'center', backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url(https://res.cloudinary.com/dpktscic3/image/upload/v1549926294/green-mountains-istock-OGphoto.jpg)', backgroundPosition: 'center center', backgroundRepeat: 'no repeat', backgroundAttachment: 'fixed', backgroundSize: 'cover'}}>
-              <Header as='h1' textAlign='center' style={{color: 'white', fontFamily: 'Roboto, sans-serif', fontSize: '3.5em', fontWeight: 'bold'}}>Midd Rides is not running now.</Header>
-              <Button
-                inverted
-                size='massive'
-                href='http://www.middlebury.edu/offices/health/publicsafety/services-we-offer/MiddRides'
-                target='_blank'
-              >
-                See Bus Schedule
-              </Button>
-            </div>
+            {notOperating}
           </div>
         );
       } else if (this.state.request) {
@@ -338,34 +332,5 @@ class App extends Component {
     }
   }
 }
-
-// <Menu.Item name='home'>
-//   Home
-// </Menu.Item>
-// <Menu.Item name='schedule'>
-//   Schedule
-// </Menu.Item>
-
-// <Container>
-//   <Header as='h1' textAlign='center'>Midd Rides is not running now.</Header>
-//   <Header>Hours of Operation</Header>
-//   <Table basic='very'>
-//     <Table.Body>
-//       <Table.Row>
-//       </Table.Row>
-//       <Table.Row>
-//         <Table.Cell>Sunday - Thursday</Table.Cell>
-//         <Table.Cell>7:30 p.m. - 1:30 a.m.</Table.Cell>
-//       </Table.Row>
-//       <Table.Row>
-//         <Table.Cell>Friday & Saturday</Table.Cell>
-//         <Table.Cell>8:30 p.m. - 2:30 a.m.</Table.Cell>
-//       </Table.Row>
-//     </Table.Body>
-//   </Table>
-//   <p>Not in operation during summer term and college breaks (Thanksgiving Break, Holiday Break, Winter Break, and Spring Break).</p>
-// </Container>
-
-
 
 export default App;
