@@ -1,27 +1,6 @@
 # Midd Rides
 
-Midd Rides is an app for the [Midd Rides](http://www.middlebury.edu/offices/health/publicsafety/services-we-offer/MiddRides) evening transportation service at Middlebury College.
+[Midd Rides](https://react-firebase-authentic-81054.firebaseapp.com/) is an app for the Midd Rides evening transportation service at Middlebury College.
 
-This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
-
-## Running the Application
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
-
-## Installing Dependencies
-
-In the project directory, run:
-
-### `npm install`
-
-## Deploying to Firebase Hosting
-
-Follow the instructions in the [Firebase Hosting documentation](https://firebase.google.com/docs/hosting/deploying).
+## Demo
+Since much of the app is inaccessible to those without a middlebury.edu email, I have included video demos of the app in a [GitHub Page](https://woojinrichardson.github.io/middrides/) for the project.
