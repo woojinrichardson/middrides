@@ -8,3 +8,17 @@ Midd Rides workers can use the app to view all ride requests in the order in whi
 
 ## Demo
 Since much of the app is inaccessible to those without a middlebury.edu email, I have included video demos of the app in a [GitHub Page](https://woojinrichardson.github.io/middrides/) for the project.
+
+## Tech
+
+### Front end
+- [React](https://reactjs.org)
+- [Semantic UI](https://semantic-ui.com) (UI framework)
+- [google-maps-react](https://github.com/fullstackreact/google-maps-react) (Google Maps React component)
+
+### Back end
+- [Firebase](https://firebase.google.com)
+    - [Authentication](https://firebase.google.com/products/auth) (authentication using Google Sign-In)
+    - [Cloud Firestore](https://firebase.google.com/products/firestore) (database, role-based access control)
+    - [Hosting](https://firebase.google.com/products/hosting)
+    - [Cloud Functions](https://firebase.google.com/products/functions) (backend JavaScript functions)
