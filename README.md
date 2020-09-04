@@ -1,6 +1,6 @@
 # Midd Rides
 
-[Midd Rides](https://react-firebase-authentic-81054.firebaseapp.com/) is an app for the Midd Rides evening transportation service at Middlebury College.
+[Midd Rides](https://middrides.com) is an app for the Midd Rides evening transportation service at Middlebury College.
 
 Students, faculty, and staff can use the app to request a ride to and from any of the designated stops during normal operating hours. The app also features a map of the Middlebury campus with a bus icon showing the real-time location of the bus.
 
