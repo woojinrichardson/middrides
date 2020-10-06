@@ -1,27 +1,26 @@
 # Midd Rides
 
-Midd Rides is an app for the [Midd Rides](http://www.middlebury.edu/offices/health/publicsafety/services-we-offer/MiddRides) evening transportation service at Middlebury College.
+![](images/middrides.png)
 
-This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
+[Midd Rides](https://middrides.com) is an app for the Midd Rides evening transportation service at Middlebury College.
 
-## Running the Application
+Students, faculty, and staff can use the app to request a ride to and from any of the designated stops during normal operating hours. The app also features a map of the Middlebury campus with a bus icon showing the real-time location of the bus.
 
-In the project directory, you can run:
+Midd Rides workers can use the app to view all ride requests in the order in which they were made, keep track of who has been picked up and who hasn't, and add, edit, and delete requests as necessary.
 
-### `npm start`
+## Demo
+Since much of the app is inaccessible to those without a middlebury.edu email, I have included video demos of the app in a [GitHub Page](https://woojinrichardson.github.io/middrides/) for the project.
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Tech
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+### Front end
+- [React](https://reactjs.org)
+- [Semantic UI](https://semantic-ui.com) (UI framework)
+- [google-maps-react](https://github.com/fullstackreact/google-maps-react) (Google Maps React component)
 
-## Installing Dependencies
-
-In the project directory, run:
-
-### `npm install`
-
-## Deploying to Firebase Hosting
-
-Follow the instructions in the [Firebase Hosting documentation](https://firebase.google.com/docs/hosting/deploying).
+### Back end
+- [Firebase](https://firebase.google.com)
+    - [Authentication](https://firebase.google.com/products/auth) (authentication using Google Sign-In)
+    - [Cloud Firestore](https://firebase.google.com/products/firestore) (database, role-based access control)
+    - [Hosting](https://firebase.google.com/products/hosting)
+    - [Cloud Functions](https://firebase.google.com/products/functions) (backend JavaScript functions)
