@@ -19,6 +19,9 @@ const initialCenter = {
   // lng: -76.511501
 }
 
+//44.01016341
+//-73.17774296
+
 
 export class MapContainer extends Component {
   constructor(props) {

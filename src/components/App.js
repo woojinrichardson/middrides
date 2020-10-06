@@ -145,7 +145,7 @@ class App extends Component {
             Midd Rides
           </Menu.Item>
           <Menu.Item
-            href='http://www.middlebury.edu/offices/health/publicsafety/services-we-offer/MiddRides'
+            href='http://www.middlebury.edu/offices/health/publicsafety/safety-and-security/services-we-offer/MiddRides'
             target='_blank'
           >
             Schedule
@@ -163,7 +163,7 @@ class App extends Component {
         <Button
           inverted
           size='massive'
-          href='http://www.middlebury.edu/offices/health/publicsafety/services-we-offer/MiddRides'
+          href='http://www.middlebury.edu/offices/health/publicsafety/safety-and-security/services-we-offer/MiddRides'
           target='_blank'
         >
           See Bus Schedule
